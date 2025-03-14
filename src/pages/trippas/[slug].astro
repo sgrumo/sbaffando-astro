@@ -1,0 +1,20 @@
+---
+import { fetchAllFestivals } from '../../lib/api/strapi'
+
+export async function getStaticPaths() {
+    const festivals = await fetchAllFestivals()
+
+    console.log(festivals)
+
+    return festivals.map(festival => ({
+        params: { slug: festival.slug },
+        props: { festival },
+    }))
+}
+
+const festival = Astro.props
+---
+
+<!-- <BlogPost {...post.data}>
+	<Content />
+</BlogPost> -->
