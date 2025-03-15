@@ -1,16 +1,20 @@
 // @ts-check
-import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField } from 'astro/config';
 
 
+import preact from "@astrojs/preact";
+
+
 export default defineConfig({
-	site: 'https://example.com',
-	integrations: [mdx(), sitemap()],
-	env: {
-		schema: {
-			BASE_URL: envField.string({ context: "client", access: "public" }),
-			API_TOKEN: envField.string({ context: "client", access: "public" }),
-		}
-	}
+    site: 'https://example.com',
+    integrations: [sitemap(), preact()],
+    env: {
+        schema: {
+            BASE_URL: envField.string({ context: "client", access: "public" }),
+            API_TOKEN: envField.string({ context: "client", access: "public" }),
+            BASE_GEOAPIFY_URL: envField.string({ context: "client", access: "public" }),
+            GEOAPIFY_TOKEN: envField.string({ context: "client", access: "public" }),
+        }
+    }
 });

@@ -6,12 +6,12 @@ export interface Pagination {
 }
 
 export interface StrapiResponse<T> {
-    data: T,
+    data: T
     meta: {}
 }
 
 export interface StrapiPaginatedResponse<T> {
-    data: Array<T>,
+    data: Array<T>
     meta: {
         pagination: Pagination
     }

@@ -1,8 +1,11 @@
 import { API_TOKEN, BASE_URL } from 'astro:env/client'
 import stringify from 'qs-stringify'
-import type { Festival } from '../models/festival'
-import type { PaginationParams } from '../models/params'
-import type { StrapiPaginatedResponse, StrapiResponse } from '../models/strapi'
+import type { Festival } from '../models/api/festival'
+import type {
+    StrapiPaginatedResponse,
+    StrapiResponse,
+} from '../models/api/strapi'
+import type { PaginationParams } from '../models/forms/params'
 
 const PAGE_SIZE = 25
 
@@ -10,23 +13,18 @@ export const fetchAllFestivals = async (
     params: PaginationParams = { page: 1 },
 ): Promise<Festival[]> => {
     const festivals: Festival[] = []
-    let queryParams = ''
 
-    if (params) {
-        const pagination = stringify({
-            pagination: { page: params.page, pageSize: PAGE_SIZE },
-        })
-        queryParams += pagination
-    }
+    const pagination = stringify({
+        pagination: { page: params.page, pageSize: PAGE_SIZE },
+    })
 
-    const response = await fetch(`${BASE_URL}/api/festivals?${queryParams}`, {
+    const response = await fetch(`${BASE_URL}/api/festivals?${pagination}`, {
         headers: {
             Authorization: `Bearer ${API_TOKEN}`,
         },
     })
 
-    console.log(response.status)
-    if (!response.ok) return [] // TODO: handle errors
+    if (!response.ok) throw new Error('Error fetching records')
     const result: StrapiPaginatedResponse<Festival> = await response.json()
 
     console.log()
