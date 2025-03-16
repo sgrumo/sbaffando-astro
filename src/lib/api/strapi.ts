@@ -26,6 +26,7 @@ export const fetchAllFestivals = async (
     if (!response.ok) throw new Error('Error fetching records')
     const result: StrapiPaginatedResponse<Festival> = await response.json()
 
+    console.log(result)
     festivals.push(...result.data)
 
     if (result.meta.pagination.page < result.meta.pagination.pageCount) {

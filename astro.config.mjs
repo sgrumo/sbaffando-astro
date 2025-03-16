@@ -1,6 +1,7 @@
 // @ts-check
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField } from 'astro/config';
+import { visualizer } from "rollup-plugin-visualizer";
 
 
 import preact from "@astrojs/preact";
@@ -20,6 +21,10 @@ export default defineConfig({
     vite: {
         ssr: {
             noExternal: ['react-hook-form']
-        }
+        },
+        plugins: [visualizer({
+            emitFile: true,
+            filename: "stats.html",
+        })]
     }
 });
