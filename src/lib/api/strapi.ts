@@ -1,11 +1,10 @@
 import { API_TOKEN, BASE_URL } from 'astro:env/client'
 import stringify from 'qs-stringify'
 import type { Festival } from '../models/api/festival'
-import type {
-    StrapiPaginatedResponse,
-    StrapiResponse,
-} from '../models/api/strapi'
+import type { StrapiPaginatedResponse } from '../models/api/strapi'
 import type { PaginationParams } from '../models/forms/params'
+import type { Result } from '../utils/algebraic'
+import { baseFetch } from './base-api'
 
 const PAGE_SIZE = 25
 
@@ -27,8 +26,6 @@ export const fetchAllFestivals = async (
     if (!response.ok) throw new Error('Error fetching records')
     const result: StrapiPaginatedResponse<Festival> = await response.json()
 
-    console.log()
-
     festivals.push(...result.data)
 
     if (result.meta.pagination.page < result.meta.pagination.pageCount) {
@@ -41,18 +38,11 @@ export const fetchAllFestivals = async (
     return festivals
 }
 
-export const fetchFestivals = async (): Promise<
-    StrapiPaginatedResponse<Festival>
+export const getFestivals = async (): Promise<
+    Result<StrapiPaginatedResponse<Festival>>
 > => {
-    const response = await fetch(`${BASE_URL}/api/festivals`)
-    const result = await response.json()
-    return result.data
-}
-
-export const fetchFestivalById = async (
-    id: string,
-): Promise<StrapiResponse<Festival>> => {
-    const response = await fetch(`${BASE_URL}/api/festivals/${id}`)
-    const result = await response.json()
-    return result.data
+    const res = await baseFetch<StrapiPaginatedResponse<Festival>>(
+        `/api/festivals`,
+    )
+    return res
 }

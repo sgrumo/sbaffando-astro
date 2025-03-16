@@ -47,6 +47,10 @@ export const Autocomplete = () => {
                         {address.address_line1},{address.address_line2},
                     </div>
                 ))}
+            {addressResults !== undefined &&
+                addressResults.length === 0 &&
+                locationQuery !== undefined &&
+                locationQuery !== '' && <div>Non sono stati trovate cose</div>}
         </label>
     )
 }
