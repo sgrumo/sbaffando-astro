@@ -3,8 +3,13 @@ import { z } from 'zod'
 const PositionSchema = z.object({
     lat: z.number().min(-90).max(90),
     lng: z.number().min(-180).max(180),
-    radius: z.number().positive(),
 })
+
+const NumberInputSchema = z
+    .string()
+    .optional()
+    .or(z.literal(''))
+    .transform(value => (value ? parseInt(value) : undefined))
 
 export const SearchFormSchema = z
     .object({
@@ -12,6 +17,7 @@ export const SearchFormSchema = z
         startDate: z.string().date().optional().or(z.literal('')),
         endDate: z.string().date().optional().or(z.literal('')),
         position: PositionSchema.optional(),
+        radius: NumberInputSchema,
     })
     .refine(
         data => {
@@ -19,7 +25,7 @@ export const SearchFormSchema = z
                 (data.query !== undefined && data.query !== '') ||
                 (data.endDate !== undefined && data.endDate !== '') ||
                 (data.startDate !== undefined && data.startDate !== '') ||
-                data.position !== undefined
+                (data.position !== undefined && data.radius !== undefined)
             )
         },
         {

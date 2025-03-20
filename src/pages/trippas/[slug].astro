@@ -2,7 +2,7 @@
 import { fetchAllFestivals } from '../../lib/api/strapi'
 
 export async function getStaticPaths() {
-    const festivals = await fetchAllFestivals()
+    const festivals = await fetchAllFestivals({ page: 1, pageSize: 25 })
 
     return festivals.map(festival => ({
         params: { slug: festival.slug },

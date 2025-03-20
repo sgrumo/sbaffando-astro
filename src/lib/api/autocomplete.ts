@@ -2,6 +2,13 @@ import { BASE_GEOAPIFY_URL, GEOAPIFY_TOKEN } from 'astro:env/client'
 import queryStringify from 'qs-stringify'
 import type { Address, AutocompleteResult } from '../models/api/autocomplete'
 import { Error, Ok, type Result } from '../utils/algebraic'
+import { ITALY_COORDS_RECT } from './const'
+
+const FETCH_PLACES_PARAMS = {
+    filter: ITALY_COORDS_RECT,
+    lang: 'it',
+    format: 'json',
+}
 
 export const fetchPlaces = async (
     query: string,
@@ -9,9 +16,7 @@ export const fetchPlaces = async (
     const queryString = queryStringify({
         text: query,
         apiKey: GEOAPIFY_TOKEN,
-        filter: 'rect:6.6272,35.4897,18.5204,47.0921',
-        lang: 'it',
-        format: 'json',
+        ...FETCH_PLACES_PARAMS,
     })
 
     const response = await fetch(
