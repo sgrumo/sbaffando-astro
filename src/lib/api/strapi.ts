@@ -54,16 +54,16 @@ export const getFestivals = async ({
 
     if (values.query) {
         //TODO: set case insensitive
-        filters['$or'][0]['title']['$contains'] = values.query
-        filters['$or'][1]['festa']['$contains'] = values.query
+        filters['$or'] = { 0: { title: { $contains: values.query } } }
+        filters['$or'] = { 1: { slug: { $contains: values.query } } }
     }
 
     if (values.startDate) {
-        filters['$and'][0]['startDate']['$gte'] = values.startDate
+        filters['$and'] = { 0: { startDate: { $gte: values.startDate } } }
     }
 
     if (values.endDate) {
-        filters['$and'][0]['startDate']['$gte'] = values.startDate
+        filters['$and'] = { 0: { endDate: { $lte: values.endDate } } }
     }
 
     if (pagination) {

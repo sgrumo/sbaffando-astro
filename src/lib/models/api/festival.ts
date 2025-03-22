@@ -1,14 +1,16 @@
+import type { BlocksContent } from '@strapi/blocks-react-renderer'
+
 export interface Festival {
     id: string
     documentId: string
     title: string
     startDate: string
     endDate: string
-    description: string | null
+    description: BlocksContent | null
     createdAt: string
     updatedAt: string
     publishedAt: string
-    location: Position
+    position: Position
     slug: string
 }
 

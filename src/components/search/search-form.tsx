@@ -12,6 +12,12 @@ import {
 import { ResultType } from '../../lib/utils/algebraic'
 import { Autocomplete } from './autocomplete'
 
+const defaultValues = {
+    query: '',
+    endDate: '',
+    startDate: '',
+}
+
 export const SearchForm = () => {
     const [festivals, setFestivals] = useState<Festival[]>()
 
@@ -21,11 +27,14 @@ export const SearchForm = () => {
         setValue,
         setError,
         clearErrors,
-        formState: { isValid, errors },
+        watch,
+        reset,
+        formState: { isValid, errors, isDirty, isSubmitted },
     } = useForm<SearchFormData>({
         mode: 'onChange',
         resolver: zodResolver(SearchFormSchema),
         criteriaMode: 'all',
+        defaultValues,
     })
 
     const onSubmit: SubmitHandler<SearchFormData> = async values => {
@@ -43,6 +52,11 @@ export const SearchForm = () => {
             })
     }
 
+    const handleReset = () => {
+        reset(defaultValues)
+        clearErrors()
+    }
+
     const handleLocationResult = ({ lat, lon }: Address) => {
         setValue('position.lat', lat, { shouldValidate: true })
         setValue('position.lng', lon, { shouldValidate: true })
@@ -51,6 +65,7 @@ export const SearchForm = () => {
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
+            onResetCapture={handleReset}
             onReset={() => {
                 clearErrors()
             }}
@@ -97,11 +112,20 @@ export const SearchForm = () => {
             </label>
             {errors && errors.root && errors.root.message}
 
-            <button type="submit">Submit</button>
-            <button type="reset">Reset</button>
-            {festivals &&
-                festivals.map(festival => <div>{festival.title}</div>)}
-            {festivals && festivals.length === 0 && (
+            <button type="submit" disabled={!isValid}>
+                Submit
+            </button>
+            <button type="reset" disabled={!isDirty}>
+                Reset
+            </button>
+            {isSubmitted &&
+                festivals &&
+                festivals.map(festival => (
+                    <a href={`trippas/${festival.slug}`} data-astro-prefetch>
+                        {festival.title}
+                    </a>
+                ))}
+            {isSubmitted && festivals && festivals.length === 0 && (
                 <span>NO FUCKIN FESTIVALS</span>
             )}
             {festivals && errors && errors.root && errors.root.message && (

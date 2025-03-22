@@ -26,5 +26,6 @@ export default defineConfig({
             emitFile: true,
             filename: "stats.html",
         })]
-    }
+    },
+    prefetch: true
 });

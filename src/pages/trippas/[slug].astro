@@ -1,4 +1,5 @@
 ---
+import BaseHead from '../../components/BaseHead.astro'
 import { fetchAllFestivals } from '../../lib/api/strapi'
 
 export async function getStaticPaths() {
@@ -15,4 +16,25 @@ const { festival } = Astro.props
 
 <!-- <BlogPost {...post.data}>
 	<Content />
-</BlogPost> -->
+</BlogPost> --><!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title={festival.title} description={festival.title} />
+        <style>
+            main {
+                width: 960px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section>
+                <h1>{festival.title}</h1>
+                <p>{festival.position.lat}</p>
+                <p>{festival.position.lng}</p>
+                <p>{festival.startDate}</p>
+                <p>{festival.endDate}</p>
+            </section>
+        </main>
+    </body>
+</html>
