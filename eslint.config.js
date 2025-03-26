@@ -14,6 +14,11 @@ export default tseslint.config(
     jsxA11y.flatConfigs.strict,
     prettierConfig,
     {
+        plugins: {
+
+        }
+    },
+    {
         rules: {
             "astro/semi": "off"
         }

@@ -1,5 +1,4 @@
 ---
-// Import the global.css file here so that it is included on
 import '../styles/global.css'
 
 import { SITE_TITLE } from '../consts'
@@ -31,18 +30,31 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site),
 <link
     as="font"
     crossorigin
-    href="/fonts/atkinson-regular.woff"
+    href="/fonts/BeVietnamPro-Bold.ttf"
     rel="preload"
-    type="font/woff"
+    type="font/ttf"
 />
 <link
     as="font"
     crossorigin
-    href="/fonts/atkinson-bold.woff"
+    href="/fonts/BeVietnamPro-Medium.ttf"
     rel="preload"
-    type="font/woff"
+    type="font/ttf"
 />
-
+<link
+    as="font"
+    crossorigin
+    href="/fonts/BeVietnamPro-Regular.ttf"
+    rel="preload"
+    type="font/ttf"
+/>
+<link
+    as="font"
+    crossorigin
+    href="/fonts/BeVietnamPro-SemiBold.ttf"
+    rel="preload"
+    type="font/ttf"
+/>
 <!-- Canonical URL -->
 <link href={canonicalURL} rel="canonical" />
 

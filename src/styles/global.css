@@ -1,1 +1,38 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+@font-face {
+    font-family: 'BeVietnamPro';
+    src: url('/fonts/BeVietnamPro-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BeVietnamPro';
+    src: url('/fonts/BeVietnamPro-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BeVietnamPro';
+    src: url('/fonts/BeVietnamPro-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'BeVietnamPro';
+    src: url('/fonts/BeVietnamPro-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+body,
+html {
+    font-family: 'BeVietnamPro', sans-serif;
+}
