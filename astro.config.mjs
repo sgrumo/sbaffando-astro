@@ -7,6 +7,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 import preact from "@astrojs/preact";
 
 
+import tailwindcss from "@tailwindcss/vite";
+
+
 export default defineConfig({
     site: 'https://example.com',
     integrations: [sitemap(), preact({ compat: true })],
@@ -25,7 +28,7 @@ export default defineConfig({
         plugins: [visualizer({
             emitFile: true,
             filename: "stats.html",
-        })]
+        }), tailwindcss()]
     },
     prefetch: true
 });
