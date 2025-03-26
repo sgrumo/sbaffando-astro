@@ -14,12 +14,10 @@ export async function getStaticPaths() {
 const { festival } = Astro.props
 ---
 
-<!-- <BlogPost {...post.data}>
-	<Content />
-</BlogPost> --><!doctype html>
+<!doctype html>
 <html lang="en">
     <head>
-        <BaseHead title={festival.title} description={festival.title} />
+        <BaseHead description={festival.title} title={festival.title} />
         <style>
             main {
                 width: 960px;

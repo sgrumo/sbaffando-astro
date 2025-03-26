@@ -27,7 +27,6 @@ export const SearchForm = () => {
         setValue,
         setError,
         clearErrors,
-        watch,
         reset,
         formState: { isValid, errors, isDirty, isSubmitted },
     } = useForm<SearchFormData>({

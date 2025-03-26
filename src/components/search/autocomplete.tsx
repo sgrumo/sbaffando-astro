@@ -70,14 +70,15 @@ export const Autocomplete = (props: AutocompleteProps) => {
                 addressResults !== undefined &&
                 addressResults.length > 0 &&
                 addressResults.map(address => (
-                    <div
+                    <button
                         key={address.place_id}
                         onClick={() => {
                             handleResultClick(address)
                         }}
+                        onKeyDown={() => handleResultClick(address)}
                     >
                         {address.address_line1},{address.address_line2},
-                    </div>
+                    </button>
                 ))}
             {!isLoading &&
                 addressResults !== undefined &&

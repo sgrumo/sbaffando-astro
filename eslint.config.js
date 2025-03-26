@@ -1,65 +1,21 @@
-import eslintPluginAstro from 'eslint-plugin-astro'
+import eslint from '@eslint/js';
+import prettierConfig from 'eslint-config-prettier';
+import eslintPluginAstro from 'eslint-plugin-astro';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import tseslint from 'typescript-eslint';
 
-export default [
-    // add more generic rule sets here, such as:
-    // js.configs.recommended,
-    // eslint.configs.recommended,
-    // ...tseslint.configs.strict,
-    ...eslintPluginAstro.configs.recommended,
-    // ...eslintPluginAstro.configs['jsx-a11y-strict'],
-    // {
-    //     files: ['**/*.astro'],
-    //     plugins: {
-    //         astro: eslintPluginAstro,
-    //     },
-    //     languageOptions: {
-    //         parser: astroParser,
-    //         parserOptions: {
-    //             parser: tseslint.parser,
-    //             extraFileExtensions: ['.astro'],
-    //         },
-    //     },
-    // },
-    // {
-    //     files: ['**/*.ts', '**/*.tsx'],
-    //     languageOptions: {
-    //         parser: tseslint.parser,
-    //     },
-    //     rules: {
-    //         '@typescript-eslint/interface-name-prefix': 'off',
-    //         '@typescript-eslint/explicit-function-return-type': 'off',
-    //         '@typescript-eslint/explicit-module-boundary-types': 'off',
-    //         '@typescript-eslint/no-explicit-any': 'off',
-    //         '@typescript-eslint/ban-ts-comment': 'warn',
-    //         '@typescript-eslint/no-unused-vars': [
-    //             'warn',
-    //             { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
-    //         ],
-    //     },
-    // },
-    // {
-    //     languageOptions: {
-    //         ecmaVersion: 2022,
-    //         sourceType: 'module',
-    //         globals: {
-    //             node: true,
-    //             browser: true,
-    //         },
-    //     },
-    //     rules: {
-    //         quotes: ['error', 'single'],
-    //         semi: ['error', 'never'],
-    //         'no-console': 'error',
-    //         'no-unused-vars': 'off',
-    //     },
-    //     ignores: [
-    //         'dist/**',
-    //         'node_modules/**',
-    //         '*.config.js',
-    //         '*.config.ts',
-    //         '.eslintrc.yml',
-    //     ],
-    // },
-    { rules: {} },
+export default tseslint.config(
+    {
+        ignores: ['**/public', '**/dist', '**/dist/*', '**/tests/*', 'coverage', '.astro/*', 'node_modules/*'],
+    },
+    eslint.configs.recommended,
+    tseslint.configs.recommended,
+    eslintPluginAstro.configs.all,
+    jsxA11y.flatConfigs.strict,
     prettierConfig,
-]
+    {
+        rules: {
+            "astro/semi": "off"
+        }
+    }
+)
