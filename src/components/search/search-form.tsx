@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'preact/hooks'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { match } from 'ts-pattern'
 import { getFestivals } from '../../lib/api/strapi'
-import type { Address } from '../../lib/models/api/autocomplete'
 import type { Festival } from '../../lib/models/api/festival'
+import type { Address } from '../../lib/models/api/geoapify'
 import {
     SearchFormSchema,
     type SearchFormData,
@@ -18,9 +17,12 @@ const defaultValues = {
     startDate: '',
 }
 
-export const SearchForm = () => {
-    const [festivals, setFestivals] = useState<Festival[]>()
+type SearchFormProps = {
+    onReceiveFestivals: (festivals: Festival[]) => void
+    onReset: () => void
+}
 
+export const SearchForm = (props: SearchFormProps) => {
     const {
         handleSubmit,
         register,
@@ -28,7 +30,7 @@ export const SearchForm = () => {
         setError,
         clearErrors,
         reset,
-        formState: { isValid, errors, isDirty, isSubmitted },
+        formState: { isValid, errors, isDirty },
     } = useForm<SearchFormData>({
         mode: 'onChange',
         resolver: zodResolver(SearchFormSchema),
@@ -41,7 +43,7 @@ export const SearchForm = () => {
 
         match(res)
             .with({ resultType: ResultType.Ok }, ({ result }) => {
-                setFestivals(result.data)
+                props.onReceiveFestivals(result.data)
             })
             .with({ resultType: ResultType.Error }, result => {
                 setError('root', {
@@ -54,6 +56,7 @@ export const SearchForm = () => {
     const handleReset = () => {
         reset(defaultValues)
         clearErrors()
+        props.onReset()
     }
 
     const handleLocationResult = ({ lat, lon }: Address) => {
@@ -63,71 +66,85 @@ export const SearchForm = () => {
 
     return (
         <form
+            className="px-4"
             onSubmit={handleSubmit(onSubmit)}
             onResetCapture={handleReset}
             onReset={() => {
                 clearErrors()
             }}
         >
-            <label>
+            <label className="flex flex-col">
                 Parola chiave
-                <input type="text" id="query" {...register('query')} />
+                <input
+                    className="border-yellow-400"
+                    type="text"
+                    id="query"
+                    {...register('query')}
+                />
                 {errors && errors.query && <span>{errors.query.message}</span>}
             </label>
-            <Autocomplete onResultClick={handleLocationResult} />
-            {errors && errors.position && (
-                <span>{errors.position.message}</span>
-            )}
-            {errors && errors.position && errors.position.lat && (
-                <span>{errors.position.lat.message}</span>
-            )}
-            {errors && errors.position && errors.position.lng && (
-                <span>{errors.position.lng.message}</span>
-            )}
-            <label>
-                Raggio (in km)
-                <input
-                    type="number"
-                    id="radius"
-                    min={5}
-                    step={1}
-                    {...register('radius')}
-                />
-            </label>
+            <div className="grid grid-cols-[76%_20%] gap-x-4">
+                <Autocomplete onResultClick={handleLocationResult} />
+                {errors && errors.position && (
+                    <span>{errors.position.message}</span>
+                )}
+                {errors && errors.position && errors.position.lat && (
+                    <span>{errors.position.lat.message}</span>
+                )}
+                {errors && errors.position && errors.position.lng && (
+                    <span>{errors.position.lng.message}</span>
+                )}
+                <label>
+                    Raggio
+                    <input
+                        type="number"
+                        id="radius"
+                        placeholder="in km"
+                        defaultValue={5}
+                        min={5}
+                        max={100}
+                        step={1}
+                        {...register('radius')}
+                    />
+                </label>
+            </div>
             {errors && errors.radius && <span>{errors.radius.message}</span>}
-            <label>
-                Data di inizio
-                <input type="date" id="startDate" {...register('startDate')} />
-                {errors && errors.startDate && (
-                    <span>{errors.startDate.message}</span>
-                )}
-            </label>
-            <label>
-                Data di fine
-                <input type="date" id="endDate" {...register('endDate')} />
-                {errors && errors.endDate && (
-                    <span>{errors.endDate.message}</span>
-                )}
-            </label>
+            <div className="flex justify-between gap-x-4">
+                <label>
+                    Data di inizio
+                    <input
+                        type="date"
+                        id="startDate"
+                        {...register('startDate')}
+                    />
+                    {errors && errors.startDate && (
+                        <span>{errors.startDate.message}</span>
+                    )}
+                </label>
+                <label>
+                    Data di fine
+                    <input type="date" id="endDate" {...register('endDate')} />
+                    {errors && errors.endDate && (
+                        <span>{errors.endDate.message}</span>
+                    )}
+                </label>
+            </div>
             {errors && errors.root && errors.root.message}
-
-            <button type="submit" disabled={!isValid}>
-                Submit
-            </button>
-            <button type="reset" disabled={!isDirty}>
+            <button
+                className="cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-black"
+                type="reset"
+                disabled={!isDirty}
+            >
                 Reset
             </button>
-            {isSubmitted &&
-                festivals &&
-                festivals.map(festival => (
-                    <a href={`trippas/${festival.slug}`} data-astro-prefetch>
-                        {festival.title}
-                    </a>
-                ))}
-            {isSubmitted && festivals && festivals.length === 0 && (
-                <span>NO FUCKIN FESTIVALS</span>
-            )}
-            {festivals && errors && errors.root && errors.root.message && (
+            <button
+                className="cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-yellow-400"
+                type="submit"
+                disabled={!isValid}
+            >
+                Cerca
+            </button>
+            {errors && errors.root && errors.root.message && (
                 <span>{errors.root.message}</span>
             )}
         </form>

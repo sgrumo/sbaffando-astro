@@ -32,6 +32,14 @@ const { festival } = Astro.props
                 <p>{festival.position.lng}</p>
                 <p>{festival.startDate}</p>
                 <p>{festival.endDate}</p>
+                {
+                    festival.address && (
+                        <p>
+                            {festival.address.address_line1},
+                            {festival.address.address_line2}
+                        </p>
+                    )
+                }
             </section>
         </main>
     </body>

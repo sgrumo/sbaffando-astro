@@ -1,17 +1,19 @@
 import { API_TOKEN, BASE_URL } from 'astro:env/client'
 import { default as queryStringify, default as stringify } from 'qs-stringify'
-import type { Festival } from '../models/api/festival'
+import { match } from 'ts-pattern'
+import type { EnrichedFestival, Festival } from '../models/api/festival'
 import type { StrapiPaginatedResponse } from '../models/api/strapi'
 import type { PaginationParams, SearchParams } from '../models/forms/params'
-import type { Result } from '../utils/algebraic'
+import { ResultType, type Result } from '../utils/algebraic'
 import { baseFetch } from './base-api'
+import { reverseGeocode } from './geoapify'
 
 const PAGE_SIZE = 25
 
 export const fetchAllFestivals = async (
     params: PaginationParams,
-): Promise<Festival[]> => {
-    const festivals: Festival[] = []
+): Promise<EnrichedFestival[]> => {
+    const festivals: EnrichedFestival[] = []
 
     const pagination = stringify({
         pagination: { page: params.page, pageSize: PAGE_SIZE },
@@ -26,7 +28,27 @@ export const fetchAllFestivals = async (
     if (!response.ok) throw new Error('Error fetching records')
     const result: StrapiPaginatedResponse<Festival> = await response.json()
 
-    festivals.push(...result.data)
+    const enrichedFestivals: EnrichedFestival[] = await Promise.all(
+        result.data.map(async festival => {
+            const addressResult = await reverseGeocode(
+                festival.position.lat,
+                festival.position.lng,
+            )
+            const address = match(addressResult)
+                .with({ resultType: ResultType.Ok }, res => {
+                    return res.result[0]
+                })
+                .with({ resultType: ResultType.Error }, err => {
+                    console.log(err.error)
+                    return undefined
+                })
+                .exhaustive()
+            console.log(address)
+            return { ...festival, address }
+        }),
+    )
+
+    festivals.push(...enrichedFestivals)
 
     if (result.meta.pagination.page < result.meta.pagination.pageCount) {
         const nextPageFestivals = await fetchAllFestivals({

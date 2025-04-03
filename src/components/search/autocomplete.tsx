@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'preact/hooks'
 import { match } from 'ts-pattern'
-import { fetchPlaces } from '../../lib/api/autocomplete'
-import type { Address } from '../../lib/models/api/autocomplete'
+import { fetchPlaces } from '../../lib/api/geoapify'
+import type { Address } from '../../lib/models/api/geoapify'
 import { ResultType } from '../../lib/utils/algebraic'
 import { Loader } from '../common/loader'
 
@@ -51,40 +51,48 @@ export const Autocomplete = (props: AutocompleteProps) => {
     }
 
     return (
-        <label>
-            Indirizzo
-            <input
-                type="text"
-                value={
-                    selectedResult
-                        ? `${selectedResult.address_line1}, ${selectedResult.address_line2}`
-                        : undefined
-                }
-                onChange={e => {
-                    setSelectedResult(undefined)
-                    setLocationQuery(e.currentTarget.value)
-                }}
-            />
-            {isLoading && <Loader />}
+        <div className="relative">
+            <label className="flex flex-col">
+                Indirizzo
+                <input
+                    type="text"
+                    className="rounded-md border-2 border-solid border-yellow-400"
+                    value={
+                        selectedResult
+                            ? `${selectedResult.address_line1}, ${selectedResult.address_line2}`
+                            : undefined
+                    }
+                    onChange={e => {
+                        setSelectedResult(undefined)
+                        setLocationQuery(e.currentTarget.value)
+                    }}
+                />
+            </label>
+            {isLoading && <Loader className="absolute top-[0%] right-0" />}
             {!isLoading &&
                 addressResults !== undefined &&
-                addressResults.length > 0 &&
-                addressResults.map(address => (
-                    <button
-                        key={address.place_id}
-                        onClick={() => {
-                            handleResultClick(address)
-                        }}
-                        onKeyDown={() => handleResultClick(address)}
-                    >
-                        {address.address_line1},{address.address_line2},
-                    </button>
-                ))}
-            {!isLoading &&
-                addressResults !== undefined &&
-                addressResults.length === 0 &&
-                locationQuery !== undefined &&
-                locationQuery !== '' && <div>Non sono stati trovate cose</div>}
-        </label>
+                addressResults.length > 0 && (
+                    <div className="absolute z-10 flex flex-col border-r-1 border-l-1 border-solid border-black bg-white">
+                        {addressResults.length > 0 &&
+                            addressResults.map(address => (
+                                <button
+                                    type="button"
+                                    className="w-full cursor-pointer border-b-1 border-solid border-black py-2 pl-4 text-left hover:bg-blue-500 hover:text-white"
+                                    key={address.place_id}
+                                    onClick={() => {
+                                        handleResultClick(address)
+                                    }}
+                                    onKeyDown={() => handleResultClick(address)}
+                                >
+                                    {address.address_line1},
+                                    {address.address_line2},
+                                </button>
+                            ))}
+                        {addressResults.length === 0 && (
+                            <div>Non sono stati trovate cose</div>
+                        )}
+                    </div>
+                )}
+        </div>
     )
 }

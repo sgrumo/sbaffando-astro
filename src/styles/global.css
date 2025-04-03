@@ -36,3 +36,11 @@ body,
 html {
     font-family: 'BeVietnamPro', sans-serif;
 }
+
+label {
+    @apply flex flex-col gap-y-[2px];
+}
+
+label input {
+    @apply rounded-2xl border-[1px] border-solid border-black py-2 pl-4;
+}

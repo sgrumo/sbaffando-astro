@@ -1,4 +1,10 @@
 import type { BlocksContent } from '@strapi/blocks-react-renderer'
+import type { Address } from './geoapify'
+
+export interface Position {
+    lat: number
+    lng: number
+}
 
 export interface Festival {
     id: string
@@ -14,7 +20,6 @@ export interface Festival {
     slug: string
 }
 
-export interface Position {
-    lat: number
-    lng: number
+export type EnrichedFestival = Festival & {
+    address?: Address
 }

@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro'
 import Footer from '../components/Footer.astro'
+import Header from '../components/Header.astro'
 import '../styles/global.css'
 
 type Props = {
@@ -17,6 +18,7 @@ const { title, description } = Astro.props
     </head>
 
     <body>
+        <Header />
         <main class="min-h-screen">
             <slot />
         </main>
