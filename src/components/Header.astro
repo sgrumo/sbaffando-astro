@@ -6,16 +6,16 @@ import HeaderLink from './HeaderLink.astro'
 ---
 
 <header>
-    <nav>
+    <nav class="flex items-center justify-between px-4 py-2">
         <h2>
-            <a class="flex items-center gap-x-2 uppercase" href="/">
+            <a class="flex items-center gap-x-2 font-bold uppercase" href="/">
                 <Image alt="Trippavisor logo" src={logo} />
                 {SITE_TITLE}
             </a>
         </h2>
-        <div>
-            <HeaderLink href="/">Home</HeaderLink>
-            <HeaderLink href="/trippas">Trippas</HeaderLink>
+        <div class="flex gap-x-2">
+            <HeaderLink href="/about">About</HeaderLink>
+            <HeaderLink href="/trippas">Cerca</HeaderLink>
         </div>
     </nav>
 </header>

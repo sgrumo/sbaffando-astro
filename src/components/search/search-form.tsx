@@ -66,12 +66,12 @@ export const SearchForm = (props: SearchFormProps) => {
 
     return (
         <form
-            className="px-4"
             onSubmit={handleSubmit(onSubmit)}
             onResetCapture={handleReset}
             onReset={() => {
                 clearErrors()
             }}
+            className="flex flex-col gap-y-2 lg:gap-y-4"
         >
             <label className="flex flex-col">
                 Parola chiave
@@ -81,19 +81,10 @@ export const SearchForm = (props: SearchFormProps) => {
                     id="query"
                     {...register('query')}
                 />
-                {errors && errors.query && <span>{errors.query.message}</span>}
             </label>
             <div className="grid grid-cols-[76%_20%] gap-x-4">
                 <Autocomplete onResultClick={handleLocationResult} />
-                {errors && errors.position && (
-                    <span>{errors.position.message}</span>
-                )}
-                {errors && errors.position && errors.position.lat && (
-                    <span>{errors.position.lat.message}</span>
-                )}
-                {errors && errors.position && errors.position.lng && (
-                    <span>{errors.position.lng.message}</span>
-                )}
+
                 <label>
                     Raggio
                     <input
@@ -108,8 +99,7 @@ export const SearchForm = (props: SearchFormProps) => {
                     />
                 </label>
             </div>
-            {errors && errors.radius && <span>{errors.radius.message}</span>}
-            <div className="flex justify-between gap-x-4">
+            <div className="flex justify-between lg:justify-start lg:gap-x-4">
                 <label>
                     Data di inizio
                     <input
@@ -117,36 +107,47 @@ export const SearchForm = (props: SearchFormProps) => {
                         id="startDate"
                         {...register('startDate')}
                     />
-                    {errors && errors.startDate && (
-                        <span>{errors.startDate.message}</span>
-                    )}
                 </label>
                 <label>
                     Data di fine
                     <input type="date" id="endDate" {...register('endDate')} />
-                    {errors && errors.endDate && (
-                        <span>{errors.endDate.message}</span>
-                    )}
                 </label>
             </div>
-            {errors && errors.root && errors.root.message}
-            <button
-                className="cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-black"
-                type="reset"
-                disabled={!isDirty}
-            >
-                Reset
-            </button>
-            <button
-                className="cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-yellow-400"
-                type="submit"
-                disabled={!isValid}
-            >
-                Cerca
-            </button>
+            <div class="flex gap-x-2">
+                <button
+                    className="w-full cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-black"
+                    type="reset"
+                    disabled={!isDirty}
+                >
+                    Reset
+                </button>
+                <button
+                    className="w-full cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-yellow-400"
+                    type="submit"
+                    disabled={!isValid}
+                >
+                    Cerca
+                </button>
+            </div>
+            {errors && errors.query && <span>{errors.query.message}</span>}
+
+            {errors && errors.position && (
+                <span>{errors.position.message}</span>
+            )}
+            {errors && errors.position && errors.position.lat && (
+                <span>{errors.position.lat.message}</span>
+            )}
+            {errors && errors.position && errors.position.lng && (
+                <span>{errors.position.lng.message}</span>
+            )}
+            {errors && errors.radius && <span>{errors.radius.message}</span>}
+            {errors && errors.startDate && (
+                <span>{errors.startDate.message}</span>
+            )}
             {errors && errors.root && errors.root.message && (
                 <span>{errors.root.message}</span>
             )}
+            {errors && errors.endDate && <span>{errors.endDate.message}</span>}
         </form>
     )
 }
