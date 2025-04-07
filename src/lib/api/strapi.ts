@@ -93,7 +93,7 @@ export const getFestivals = async ({
         paginationParams['pageSize'] = pagination.pageSize
     }
 
-    const query = queryStringify({ filters })
+    const query = queryStringify({ filters, pagination: paginationParams })
 
     const res = await baseFetch<StrapiPaginatedResponse<Festival>>(
         `festivals?${query}`,

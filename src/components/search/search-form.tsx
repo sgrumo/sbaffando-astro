@@ -1,14 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { match } from 'ts-pattern'
-import { getFestivals } from '../../lib/api/strapi'
 import type { Festival } from '../../lib/models/api/festival'
 import type { Address } from '../../lib/models/api/geoapify'
+import type { StrapiPaginatedResponse } from '../../lib/models/api/strapi'
 import {
     SearchFormSchema,
     type SearchFormData,
 } from '../../lib/models/forms/schemas'
-import { ResultType } from '../../lib/utils/algebraic'
+import { ResultType, type Result } from '../../lib/utils/algebraic'
 import { Autocomplete } from './autocomplete'
 
 const defaultValues = {
@@ -18,7 +18,9 @@ const defaultValues = {
 }
 
 type SearchFormProps = {
-    onReceiveFestivals: (festivals: Festival[]) => void
+    handleSubmit: (
+        searchFormData: SearchFormData,
+    ) => Promise<Result<StrapiPaginatedResponse<Festival>>>
     onReset: () => void
 }
 
@@ -39,18 +41,14 @@ export const SearchForm = (props: SearchFormProps) => {
     })
 
     const onSubmit: SubmitHandler<SearchFormData> = async values => {
-        const res = await getFestivals({ values })
+        const res = await props.handleSubmit(values)
 
-        match(res)
-            .with({ resultType: ResultType.Ok }, ({ result }) => {
-                props.onReceiveFestivals(result.data)
+        match(res).with({ resultType: ResultType.Error }, result => {
+            setError('root', {
+                type: 'custom',
+                message: result.error,
             })
-            .with({ resultType: ResultType.Error }, result => {
-                setError('root', {
-                    type: 'custom',
-                    message: result.error,
-                })
-            })
+        })
     }
 
     const handleReset = () => {

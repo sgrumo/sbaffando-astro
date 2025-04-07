@@ -6,7 +6,7 @@ type SearchResultsProps = {
 
 export const SearchResults = (props: SearchResultsProps) => {
     return (
-        <div className="mt-4 grid grid-cols-2 gap-x-2 gap-y-8 md:grid-cols-3 md:gap-x-4 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 gap-x-2 gap-y-4 md:grid-cols-3 md:gap-x-4 md:gap-y-8 lg:grid-cols-4">
             {props.festivals.length > 0 &&
                 props.festivals.map(festival => (
                     <div className="flex items-center gap-x-2 rounded-2xl border-1 border-solid border-black px-2 py-1 break-words">
@@ -25,7 +25,11 @@ export const SearchResults = (props: SearchResultsProps) => {
                         </a>
                     </div>
                 ))}
-            {props.festivals.length === 0 && <span>NO FUCKIN FESTIVALS</span>}
+            {props.festivals.length === 0 && (
+                <span className="mt-4 font-bold">
+                    Non sono state trovate sagre con questi criteri di ricerca!
+                </span>
+            )}
         </div>
     )
 }
