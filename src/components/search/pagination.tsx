@@ -17,8 +17,8 @@ const SearchPagination = ({
     onPageChange,
     maxVisiblePages = 5,
     labels = {
-        previous: 'Previous',
-        next: 'Next',
+        previous: 'Precedente',
+        next: 'Successiva',
         pageLabel: 'Go to page',
         navigationLabel: 'Pagination',
     },
@@ -52,15 +52,18 @@ const SearchPagination = ({
     }
 
     return (
-        <nav aria-label={labels.navigationLabel || 'Pagination'}>
-            <ul className="flex gap-x-1">
+        <nav
+            aria-label={labels.navigationLabel || 'Pagination'}
+            className="mt-4 py-4"
+        >
+            <ul className="flex justify-center gap-x-1">
                 <li>
                     <button
                         onClick={() => handlePageClick(safePage - 1)}
                         type="button"
                         disabled={safePage === 1}
                         aria-label={labels.previous}
-                        class="pagination-prev"
+                        className="cursor-pointer"
                     >
                         &laquo; {labels.previous}
                     </button>
@@ -71,6 +74,7 @@ const SearchPagination = ({
                         <li>
                             <button
                                 type="button"
+                                className="cursor-pointer"
                                 onClick={() => handlePageClick(1)}
                                 aria-label={`${labels.pageLabel} 1`}
                             >
@@ -89,12 +93,16 @@ const SearchPagination = ({
                     <li key={page}>
                         <button
                             type="button"
+                            className="cursor-pointer"
                             onClick={() => handlePageClick(page)}
                             aria-label={`${labels.pageLabel} ${page}`}
                             aria-current={
                                 page === safePage ? 'page' : undefined
                             }
-                            class={`pagination-link ${page === safePage ? 'is-current' : ''}`}
+                            style={{
+                                fontWeight:
+                                    page === safePage ? 'bold' : 'normal',
+                            }}
                         >
                             {page}
                         </button>
@@ -116,9 +124,10 @@ const SearchPagination = ({
                         )}
                         <li>
                             <button
+                                type="button"
                                 onClick={() => handlePageClick(totalPages)}
                                 aria-label={`${labels.pageLabel} ${totalPages}`}
-                                class="pagination-link"
+                                className="cursor-pointer"
                             >
                                 {totalPages}
                             </button>

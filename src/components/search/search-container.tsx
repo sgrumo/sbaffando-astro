@@ -1,5 +1,6 @@
 import { useState } from 'preact/hooks'
 import { match } from 'ts-pattern'
+import { DEFAULT_PAGE_SIZE } from '../../lib/api/const'
 import { getFestivals } from '../../lib/api/strapi'
 import type { Festival } from '../../lib/models/api/festival'
 import {
@@ -26,7 +27,7 @@ export const SearchContainer = () => {
     ): Promise<Result<StrapiPaginatedResponse<Festival>>> => {
         const res = await getFestivals({
             values,
-            pagination: { page: 1, pageSize: 1 },
+            pagination: { page: 1, pageSize: DEFAULT_PAGE_SIZE },
         })
         setSearchValues(values)
         match(res).with({ resultType: ResultType.Ok }, ({ result }) => {
@@ -39,7 +40,7 @@ export const SearchContainer = () => {
     const handlePageChange = async (page: number) => {
         const res = await getFestivals({
             values: searchValues!,
-            pagination: { page, pageSize: 1 },
+            pagination: { page, pageSize: DEFAULT_PAGE_SIZE },
         })
         match(res).with({ resultType: ResultType.Ok }, ({ result }) => {
             setFestivals(result.data)
@@ -51,13 +52,15 @@ export const SearchContainer = () => {
         <>
             <SearchForm onReset={handleReset} handleSubmit={onHandleSubmit} />
             {festivals !== undefined && <SearchResults festivals={festivals} />}
-            {festivals !== undefined && pagination !== undefined && (
-                <SearchPagination
-                    totalPages={pagination.pageCount}
-                    currentPage={pagination.page}
-                    onPageChange={handlePageChange}
-                />
-            )}
+            {festivals !== undefined &&
+                pagination !== undefined &&
+                pagination.pageCount > 1 && (
+                    <SearchPagination
+                        totalPages={pagination.pageCount}
+                        currentPage={pagination.page}
+                        onPageChange={handlePageChange}
+                    />
+                )}
         </>
     )
 }
