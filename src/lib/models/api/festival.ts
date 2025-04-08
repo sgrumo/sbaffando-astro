@@ -1,5 +1,5 @@
-import type { BlocksContent } from '@strapi/blocks-react-renderer'
 import type { Address } from './geoapify'
+import type { StrapiBlock } from './strapi'
 
 export interface Position {
     lat: number
@@ -12,7 +12,7 @@ export interface Festival {
     title: string
     startDate: string
     endDate: string
-    description: BlocksContent | null
+    description: StrapiBlock[] | null
     createdAt: string
     updatedAt: string
     publishedAt: string

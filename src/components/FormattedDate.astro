@@ -1,17 +1,17 @@
 ---
+import 'dayjs/locale/it'
+
+import dayjs from 'dayjs'
+
 interface Props {
-    date: Date
+    date: string
 }
 
 const { date } = Astro.props
+
+const formatted = dayjs(date).locale('it').format('DD MMMM YYYY')
 ---
 
-<time datetime={date.toISOString()}>
-    {
-        date.toLocaleDateString('it', {
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric',
-        })
-    }
+<time>
+    {formatted}
 </time>

@@ -1,5 +1,7 @@
 ---
-import BaseHead from '../../components/BaseHead.astro'
+import FormattedDate from '../../components/FormattedDate.astro'
+import BlockRenderContent from '../../components/trippas/BlockRenderContent.astro'
+import HeaderLayout from '../../layouts/HeaderLayout.astro'
 import { fetchAllFestivals } from '../../lib/api/strapi'
 
 export async function getStaticPaths() {
@@ -14,33 +16,34 @@ export async function getStaticPaths() {
 const { festival } = Astro.props
 ---
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <BaseHead description={festival.title} title={festival.title} />
-        <style>
-            main {
-                width: 960px;
-            }
-        </style>
-    </head>
-    <body>
-        <main>
-            <section>
-                <h1>{festival.title}</h1>
-                <p>{festival.position.lat}</p>
-                <p>{festival.position.lng}</p>
-                <p>{festival.startDate}</p>
-                <p>{festival.endDate}</p>
-                {
-                    festival.address && (
-                        <p>
-                            {festival.address.address_line1},
-                            {festival.address.address_line2}
-                        </p>
-                    )
-                }
-            </section>
-        </main>
-    </body>
-</html>
+<HeaderLayout
+    description={`Trippavisor - ${festival.title}`}
+    title={festival.title}
+>
+    <section class="flex flex-col gap-y-4">
+        <h1 class="text-3xl font-bold">{festival.title}</h1>
+        <h2 class="text-2xl font-bold">QUANDO?</h2>
+        <section>
+            Dal <FormattedDate date={festival.startDate} />
+            al <FormattedDate date={festival.endDate} />
+        </section>
+        <h2 class="text-2xl font-bold">DOVE?</h2>
+        {
+            festival.address && (
+                <a
+                    class="underline"
+                    href={`https://www.google.com/maps/place/${festival.address.lat},${festival.address.lon}`}
+                    target="_blank"
+                >
+                    {festival.address.address_line1},
+                    {festival.address.address_line2}
+                </a>
+            )
+        }
+        {
+            festival.description && (
+                <BlockRenderContent content={festival.description} />
+            )
+        }
+    </section>
+</HeaderLayout>
