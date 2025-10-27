@@ -1,3 +1,3 @@
 export const ITALY_COORDS_RECT = 'rect:6.6272,35.4897,18.5204,47.0921'
 
-export const DEFAULT_PAGE_SIZE = 1
+export const DEFAULT_PAGE_SIZE = 10
