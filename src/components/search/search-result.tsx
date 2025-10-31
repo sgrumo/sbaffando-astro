@@ -8,8 +8,9 @@ import {
 
 type SearchResultProps = {
     festival: EnrichedFestival
+    landing?: boolean
 }
-export const SearchResult = ({ festival }: SearchResultProps) => {
+export const SearchResult = ({ festival, landing }: SearchResultProps) => {
     const timing = getTimingFromTimeBounds(festival.startDate, festival.endDate)
 
     const timingConf = match(timing)
@@ -53,6 +54,7 @@ export const SearchResult = ({ festival }: SearchResultProps) => {
     return (
         <a
             href={`trippas/${festival.slug}`}
+            data-umami-event={`Search Result Click${landing ? `[Landing] Clicked on ${festival.slug}` : 'Clicked on ${festival.slug}'}`}
             data-astro-prefetch
             className="group md:h-full"
         >

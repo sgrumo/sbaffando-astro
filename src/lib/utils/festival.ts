@@ -5,6 +5,7 @@ export const emojiForFestival = (title: string): string => {
     const lower = title.toLowerCase()
 
     return match(lower)
+        .with(P.string.regex(/\b(san|sant[oai])\b/), () => '😇')
         .with(P.string.regex(/\bpizz[ae]?\b/), () => '🍕')
         .with(P.string.regex(/\blasagna?\b/), () => '🍝')
 
@@ -21,7 +22,9 @@ export const emojiForFestival = (title: string): string => {
         .with(P.string.regex(/\b(zucca)\b/), () => '🎃')
         .with(P.string.regex(/\b(ran[ea]|rospie)\b/), () => '🐸')
         .with(
-            P.string.regex(/\b(prosciutt[io]|salame|salumi|cotechin[io])\b/),
+            P.string.regex(
+                /\b(porcell[io]|maial[ei]|prosciutt[io]|salame|salumi|cotechin[io])\b/,
+            ),
             () => '🍖',
         )
         .with(
