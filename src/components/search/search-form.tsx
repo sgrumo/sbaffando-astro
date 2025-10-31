@@ -62,90 +62,146 @@ export const SearchForm = (props: SearchFormProps) => {
         setValue('position.lng', lon, { shouldValidate: true })
     }
 
+    // const hasErrors = Object.keys(errors).length > 0
+
     return (
         <form
             onSubmit={handleSubmit(onSubmit)}
             onResetCapture={handleReset}
-            onReset={() => {
-                clearErrors()
-            }}
-            className="flex flex-col gap-y-2 lg:gap-y-4"
+            onReset={() => clearErrors()}
+            className="flex flex-col gap-y-3 p-4 md:gap-y-4 md:p-6"
         >
-            <label className="flex flex-col">
-                Parola chiave
+            <div className="flex flex-col">
+                <label
+                    htmlFor="query"
+                    className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
+                >
+                    Parola chiave
+                </label>
                 <input
-                    className="border-yellow-400"
+                    className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
                     type="text"
                     id="query"
+                    placeholder="Es. pizza, arrosticini..."
                     {...register('query')}
                 />
-            </label>
-            <div className="grid grid-cols-[76%_20%] gap-x-4">
-                <Autocomplete onResultClick={handleLocationResult} />
+                {errors.query && (
+                    <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
+                        {errors.query.message}
+                    </span>
+                )}
+            </div>
 
-                <label>
-                    Raggio
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_120px] md:gap-4">
+                <div className="flex flex-col">
+                    <label
+                        htmlFor="location"
+                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
+                    >
+                        Posizione
+                    </label>
+                    <Autocomplete onResultClick={handleLocationResult} />
+                    {errors.position && (
+                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
+                            {errors.position.message ||
+                                errors.position.lat?.message ||
+                                errors.position.lng?.message}
+                        </span>
+                    )}
+                </div>
+
+                <div className="flex flex-col">
+                    <label
+                        htmlFor="radius"
+                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
+                    >
+                        Raggio (km)
+                    </label>
                     <input
+                        className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
                         type="number"
                         id="radius"
-                        placeholder="in km"
+                        placeholder="5"
                         defaultValue={5}
                         min={5}
                         max={100}
                         step={1}
                         {...register('radius')}
                     />
-                </label>
+                    {errors.radius && (
+                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
+                            {errors.radius.message}
+                        </span>
+                    )}
+                </div>
             </div>
-            <div className="flex justify-between lg:justify-start lg:gap-x-4">
-                <label>
-                    Data di inizio
+
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
+                <div className="flex flex-col">
+                    <label
+                        htmlFor="startDate"
+                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
+                    >
+                        Data di inizio
+                    </label>
                     <input
+                        className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
                         type="date"
                         id="startDate"
                         {...register('startDate')}
                     />
-                </label>
-                <label>
-                    Data di fine
-                    <input type="date" id="endDate" {...register('endDate')} />
-                </label>
+                    {errors.startDate && (
+                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
+                            {errors.startDate.message}
+                        </span>
+                    )}
+                </div>
+
+                <div className="flex flex-col">
+                    <label
+                        htmlFor="endDate"
+                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
+                    >
+                        Data di fine
+                    </label>
+                    <input
+                        className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
+                        type="date"
+                        id="endDate"
+                        {...register('endDate')}
+                    />
+                    {errors.endDate && (
+                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
+                            {errors.endDate.message}
+                        </span>
+                    )}
+                </div>
             </div>
-            <div class="flex gap-x-2">
+
+            {errors.root && errors.root.message && (
+                <div className="rounded border-l-4 border-red-500 bg-red-50 p-3 md:p-4">
+                    <span className="text-sm font-medium text-red-700 md:text-base">
+                        {errors.root.message}
+                    </span>
+                </div>
+            )}
+
+            <div className="flex gap-3 pt-2 md:gap-4 md:pt-4">
                 <button
-                    className="w-full cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-black"
+                    className="flex-1 rounded-lg bg-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-900 transition-all duration-200 hover:bg-gray-300 active:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50 md:px-6 md:py-3 md:text-base"
                     type="reset"
                     disabled={!isDirty}
                 >
                     Reset
                 </button>
                 <button
-                    className="w-full cursor-pointer rounded-2xl bg-gray-400 px-10 py-2 text-white valid:bg-yellow-400"
+                    className="flex-1 rounded-lg bg-gray-400 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-gray-500 active:bg-gray-600 enabled:bg-yellow-500 enabled:hover:bg-yellow-600 enabled:active:bg-yellow-700 disabled:cursor-not-allowed disabled:opacity-50 md:px-6 md:py-3 md:text-base"
                     type="submit"
                     disabled={!isValid}
                 >
                     Cerca
                 </button>
             </div>
-            {errors && errors.query && <span>{errors.query.message}</span>}
-
-            {errors && errors.position && (
-                <span>{errors.position.message}</span>
-            )}
-            {errors && errors.position && errors.position.lat && (
-                <span>{errors.position.lat.message}</span>
-            )}
-            {errors && errors.position && errors.position.lng && (
-                <span>{errors.position.lng.message}</span>
-            )}
-            {errors && errors.radius && <span>{errors.radius.message}</span>}
-            {errors && errors.startDate && (
-                <span>{errors.startDate.message}</span>
-            )}
-            {errors && errors.root && errors.root.message && (
-                <span>{errors.root.message}</span>
-            )}
-            {errors && errors.endDate && <span>{errors.endDate.message}</span>}
         </form>
     )
 }

@@ -51,21 +51,31 @@ const SearchPagination = ({
         }
     }
 
+    const baseButtonClass =
+        'px-2.5 py-2 md:px-3 md:py-2 text-sm md:text-base font-medium transition-all duration-200 rounded-md'
+
+    const regularButtonClass = `${baseButtonClass} text-gray-700 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed`
+
+    const activeButtonClass = `${baseButtonClass} bg-yellow-500 text-white font-bold hover:bg-yellow-600 active:bg-yellow-700`
+
+    const navigationButtonClass = `${baseButtonClass} text-gray-700 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold`
+
     return (
         <nav
             aria-label={labels.navigationLabel || 'Pagination'}
-            className="mt-4 py-4"
+            className="mt-6 flex justify-center py-4 md:mt-8"
         >
-            <ul className="flex justify-center gap-x-1">
+            <ul className="flex flex-wrap items-center justify-center gap-1 md:gap-2">
                 <li>
                     <button
                         onClick={() => handlePageClick(safePage - 1)}
                         type="button"
                         disabled={safePage === 1}
                         aria-label={labels.previous}
-                        className="cursor-pointer"
+                        className={navigationButtonClass}
                     >
-                        &laquo; {labels.previous}
+                        <span className="hidden sm:inline">&laquo;</span>
+                        <span className="sm:hidden">‹</span>
                     </button>
                 </li>
 
@@ -74,35 +84,36 @@ const SearchPagination = ({
                         <li>
                             <button
                                 type="button"
-                                className="cursor-pointer"
                                 onClick={() => handlePageClick(1)}
                                 aria-label={`${labels.pageLabel} 1`}
+                                className={regularButtonClass}
                             >
                                 1
                             </button>
                         </li>
                         {visiblePages[0] > 2 && (
-                            <li>
-                                <span aria-hidden="true">&hellip;</span>
+                            <li className="px-1 text-gray-400">
+                                <span aria-hidden="true">…</span>
                             </li>
                         )}
                     </>
                 )}
 
+                {/* Visible page numbers */}
                 {visiblePages.map(page => (
                     <li key={page}>
                         <button
                             type="button"
-                            className="cursor-pointer"
                             onClick={() => handlePageClick(page)}
                             aria-label={`${labels.pageLabel} ${page}`}
                             aria-current={
                                 page === safePage ? 'page' : undefined
                             }
-                            style={{
-                                fontWeight:
-                                    page === safePage ? 'bold' : 'normal',
-                            }}
+                            className={
+                                page === safePage
+                                    ? activeButtonClass
+                                    : regularButtonClass
+                            }
                         >
                             {page}
                         </button>
@@ -113,13 +124,8 @@ const SearchPagination = ({
                     <>
                         {visiblePages[visiblePages.length - 1] <
                             totalPages - 1 && (
-                            <li>
-                                <span
-                                    class="pagination-ellipsis"
-                                    aria-hidden="true"
-                                >
-                                    &hellip;
-                                </span>
+                            <li className="px-1 text-gray-400">
+                                <span aria-hidden="true">…</span>
                             </li>
                         )}
                         <li>
@@ -127,7 +133,7 @@ const SearchPagination = ({
                                 type="button"
                                 onClick={() => handlePageClick(totalPages)}
                                 aria-label={`${labels.pageLabel} ${totalPages}`}
-                                className="cursor-pointer"
+                                className={regularButtonClass}
                             >
                                 {totalPages}
                             </button>
@@ -141,9 +147,10 @@ const SearchPagination = ({
                         onClick={() => handlePageClick(safePage + 1)}
                         disabled={safePage === totalPages}
                         aria-label={labels.next}
-                        class="pagination-next"
+                        className={navigationButtonClass}
                     >
-                        {labels.next} &raquo;
+                        <span className="hidden sm:inline">»</span>
+                        <span className="sm:hidden">›</span>
                     </button>
                 </li>
             </ul>

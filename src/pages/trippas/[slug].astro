@@ -20,41 +20,109 @@ const { festival } = Astro.props
     description={`Sbaffando - ${festival.title}`}
     title={festival.title}
 >
-    <section class="flex flex-col gap-y-4">
-        <h1 class="text-3xl font-bold">{festival.title}</h1>
-        <h2 class="text-2xl font-bold">QUANDO?</h2>
-        {
-            festival.startDate !== festival.endDate && (
-                <section>
-                    Dal <FormattedDate date={festival.startDate} />
-                    al <FormattedDate date={festival.endDate} />
-                </section>
-            )
-        }
-        {
-            festival.startDate === festival.endDate && (
-                <section>
-                    <FormattedDate date={festival.startDate} />
-                </section>
-            )
-        }
-        <h2 class="text-2xl font-bold">DOVE?</h2>
-        {
-            festival.address && (
-                <a
-                    class="underline"
-                    href={`https://www.google.com/maps/place/${festival.address.lat},${festival.address.lon}`}
-                    target="_blank"
-                >
-                    {festival.address.address_line1},
-                    {festival.address.address_line2}
-                </a>
-            )
-        }
+    <article class="mx-auto max-w-4xl px-4 py-6 md:px-6 md:py-10 lg:px-8">
+        <div class="mb-8 md:mb-12">
+            <h1
+                class="mb-2 text-4xl font-bold text-gray-900 md:text-5xl lg:text-6xl"
+            >
+                {festival.title}
+            </h1>
+            <div class="h-1 w-16 rounded-full bg-yellow-500"></div>
+        </div>
+
+        <section class="mb-8 border-b-2 border-gray-200 pb-8 md:mb-12 md:pb-12">
+            <h2
+                class="mb-4 flex items-center gap-2 text-2xl font-bold text-gray-900 md:text-3xl"
+            >
+                Quando?
+            </h2>
+            <div class="text-lg font-medium text-gray-700 md:text-xl">
+                {
+                    festival.startDate !== festival.endDate ? (
+                        <div class="flex flex-col md:flex-row md:items-center md:gap-2">
+                            <span>
+                                Dal <FormattedDate date={festival.startDate} />
+                            </span>
+                            <span class="hidden md:inline">—</span>
+                            <span>
+                                al <FormattedDate date={festival.endDate} />
+                            </span>
+                        </div>
+                    ) : (
+                        <div>
+                            <FormattedDate date={festival.startDate} />
+                        </div>
+                    )
+                }
+            </div>
+        </section>
+
+        <section class="mb-8 border-b-2 border-gray-200 pb-8 md:mb-12 md:pb-12">
+            <h2
+                class="mb-4 flex items-center gap-2 text-2xl font-bold text-gray-900 md:text-3xl"
+            >
+                Dove?
+            </h2>
+            {
+                festival.address ? (
+                    <a
+                        class="inline-flex flex-col gap-1 p-4 md:p-5 bg-yellow-50 hover:bg-yellow-100 border-2 border-yellow-300 rounded-lg transition-colors group"
+                        href={`https://www.google.com/maps/place/${festival.address.lat},${festival.address.lon}`}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                    >
+                        <span class="text-lg md:text-xl font-semibold text-gray-900 group-hover:text-yellow-700">
+                            {festival.address.address_line1}
+                        </span>
+                        {festival.address.address_line2 && (
+                            <span class="text-sm md:text-base text-gray-600 group-hover:text-gray-900">
+                                {festival.address.address_line2}
+                            </span>
+                        )}
+                        <span class="text-xs md:text-sm text-yellow-600 font-medium mt-2">
+                            Apri su Google Maps →
+                        </span>
+                    </a>
+                ) : (
+                    <div class="p-4 md:p-5 bg-gray-100 rounded-lg text-gray-600">
+                        Posizione non disponibile
+                    </div>
+                )
+            }
+        </section>
+
         {
             festival.description && (
-                <BlockRenderContent content={festival.description} />
+                <section class="mb-8 md:mb-12">
+                    <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                        Dettagli
+                    </h2>
+                    <div class="prose prose-sm md:prose-base max-w-none text-gray-700 leading-relaxed">
+                        <BlockRenderContent content={festival.description} />
+                    </div>
+                </section>
             )
         }
-    </section>
+
+        <div class="mt-12 border-t-2 border-gray-200 pt-8 md:mt-16">
+            <a
+                class="inline-flex items-center gap-2 rounded-lg bg-yellow-500 px-4 py-2.5 font-semibold text-gray-900 transition-colors hover:bg-gray-300 md:px-6 md:py-3"
+                href="/trippas"
+            >
+                <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M15 19l-7-7 7-7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"></path>
+                </svg>
+                Torna alla Ricerca
+            </a>
+        </div>
+    </article>
 </HeaderLayout>
