@@ -3,7 +3,6 @@ import { Image } from 'astro:assets'
 import altraBellaSignora from '../assets/homepage/altrabellasignora.webp'
 import bellaSignora from '../assets/homepage/bellasignora.webp'
 import belSignore from '../assets/homepage/belsignore.webp'
-import logo from '../assets/logo.svg'
 import { SearchResult } from '../components/search/search-result.tsx'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import Layout from '../layouts/BaseLayout.astro'
@@ -14,13 +13,19 @@ const festivals = await fetchLatestFestivals()
 ---
 
 <Layout description={SITE_DESCRIPTION} title={SITE_TITLE}>
+    <!-- HERO SECTION -->
     <section
-        class="relative flex h-screen flex-col items-center justify-center gap-y-0.5 bg-yellow-500"
+        class="relative flex h-screen flex-col items-center justify-center gap-y-0.5 overflow-hidden bg-gradient-to-b from-yellow-500 to-yellow-400"
     >
-        <h1 class="text-5xl font-bold uppercase md:text-7xl lg:text-9xl">
+        <h1
+            class="relative z-10 px-4 text-center text-5xl font-bold uppercase md:text-7xl lg:text-9xl"
+        >
             Sbaffando
         </h1>
-        <h2>Il portale definitivo delle sagre</h2>
+        <h2 class="relative z-10 text-lg font-medium md:text-2xl">
+            Il portale definitivo delle sagre
+        </h2>
+
         <picture
             class="bella-signora absolute bottom-0 left-0 w-[50%] lg:w-[25%]"
         >
@@ -32,92 +37,197 @@ const festivals = await fetchLatestFestivals()
             <Image alt="Bella signora che cucina" src={altraBellaSignora} />
         </picture>
     </section>
-    <section class="my-8 px-8" id="latest-festivals">
-        <h2 class="text-center text-6xl font-bold uppercase">
-            LE ULTIME MIGLIORI SAGRE
-        </h2>
-        <div
-            class="grid auto-rows-fr grid-cols-1 gap-x-2 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4"
-        >
-            {festivals.map(festival => <SearchResult festival={festival} />)}
-        </div>
-        <a class="anchor-button" href="/trippas">
-            GUARDATI LE ALTRE SAGRE SUBITO
-        </a>
-    </section>
-    <section
-        class="relative px-4 py-16 md:px-10 md:pt-24 lg:mt-32 lg:px-24 xl:px-48"
-    >
-        <div class="grid grid-cols-1">
-            <ul class="text-3xl">
-                <li>Cerchi un ristorante stellato?</li>
-                <li class="mt-20 md:mt-8 md:text-right">
-                    Vuoi mangiare piccoli piatti, ma delicati?
-                </li>
-            </ul>
-            <div
-                class="flex justify-center gap-x-2 py-24 text-center text-6xl md:text-5xl"
-            >
-                <span class="inline-block font-bold uppercase">
-                    hai sbagliato sito
-                </span>
+
+    <section class="bg-white px-6 py-16 md:px-12 md:py-24 lg:px-24">
+        <div class="mx-auto max-w-4xl text-center">
+            <h2 class="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
+                Scopri le migliori sagre d'Italia
+            </h2>
+            <p class="mb-8 text-lg leading-relaxed text-gray-600 md:text-xl">
+                Da nord a sud, ogni sagra racconta una storia. Cibo, tradizione
+                e comunità si incontrano in esperienze autentiche che non puoi
+                vivere da nessun'altra parte.
+            </p>
+            <div class="flex flex-col justify-center gap-4 sm:flex-row">
+                <a
+                    class="inline-block rounded-lg bg-yellow-500 px-32 py-3 font-bold text-white uppercase transition-colors duration-200 hover:bg-yellow-600"
+                    data-umami-event="Hero CTA click"
+                    href="/trippas"
+                >
+                    Inizia a Esplorare
+                </a>
             </div>
         </div>
-        <picture class="absolute right-[3%] bottom-[10%] w-[50%]">
-            <Image alt="Tortellino volante" src={logo} />
-        </picture>
     </section>
 
     <section
-        class="relative px-4 pt-4 pb-16 md:px-10 md:pt-24 lg:mt-32 lg:px-24 xl:px-48"
+        class="bg-gray-50 px-6 py-16 md:px-12 md:py-24 lg:px-24"
+        id="latest-festivals"
     >
-        <div class="relative flex flex-col gap-y-2">
-            <p
-                class="text-green mb-6 w-[95%] text-5xl font-semibold md:max-w-[70%]"
+        <div class="mx-auto max-w-7xl">
+            <div class="mb-12 text-center">
+                <h2 class="mb-3 text-4xl font-bold uppercase md:text-5xl">
+                    Le Migliori Sagre Ora
+                </h2>
+                <p class="text-lg text-gray-600">
+                    Scopri cosa sta accadendo nel mondo delle sagre italiane
+                </p>
+            </div>
+
+            <div
+                class="grid auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4"
             >
-                Rimani qui per esplorare le sagre che fanno tendenza in Italia
-            </p>
-        </div>
-        <div class="about-content flex flex-col gap-y-2 md:max-w-[70%]">
-            <h3 class="mt-4 mb-0 text-lg leading-4 font-semibold">
-                Cos'è Sbaffando
-            </h3>
-            <p>
-                <i>Sbaffando</i> è il tuo passaporto per l'avventura nelle sagre
-                italiane, dove ogni evento è un'opportunità per scoprire storie nascoste
-                e sapori indimenticabili.
-            </p>
-            <h3 class="mt-4 mb-0 text-lg leading-4 font-semibold">
-                Perché Sbaffando
-            </h3>
-            <p>
-                Lasciati ispirare da paesaggi mozzafiato e dalla passione delle
-                comunità locali: <i>Sbaffando</i> è più di una guida, è un invito
-                a vivere l'Italia con il cuore.
-            </p>
-            <h3 class="mt-4 mb-0 text-lg leading-4 font-semibold">
-                Non sai dove cominciare?
-            </h3>
-            <p>
-                Con <i>Sbaffando</i> puoi trovare la sagra perfetta
-            </p>
-            <div class="my-8 flex gap-x-4">
+                {
+                    festivals.map(festival => (
+                        <SearchResult festival={festival} />
+                    ))
+                }
+            </div>
+
+            <div class="mt-12 text-center">
                 <a
-                    class="cursor-pointer rounded-2xl bg-yellow-400 px-10 py-2 text-white uppercase"
-                    data-umami-event="About search button click"
+                    class="inline-block rounded-lg bg-yellow-500 px-8 py-3 font-bold text-white uppercase transition-colors duration-200 hover:bg-yellow-600"
+                    data-umami-event="View all festivals click"
                     href="/trippas"
                 >
-                    Vai alla ricerca!
+                    Scopri Tutte le Sagre
                 </a>
-                <picture
-                    class="bel-signore absolute right-[3%] bottom-0 z-[-1] w-[30%] md:w-[40%] lg:w-[30%]"
-                >
-                    <Image
-                        alt="Bel signore con il pollice in alto"
-                        src={belSignore}
-                    />
-                </picture>
             </div>
+        </div>
+    </section>
+
+    <section
+        class="relative overflow-hidden bg-yellow-100 px-6 py-24 md:px-12 md:py-32 lg:px-24"
+    >
+        <div class="max-w-3xl">
+            <ul class="space-y-8 text-3xl font-bold md:space-y-6 md:text-4xl">
+                <li class="text-gray-900">Cerchi un ristorante stellato?</li>
+                <li class="text-gray-700 md:text-right">
+                    Vuoi mangiare piccoli piatti delicati su piatti grandi?
+                </li>
+                <li class="text-gray-500 md:text-left">
+                    Pagare 200€ per tre olive e un filo d'olio?
+                </li>
+            </ul>
+
+            <div class="mt-16 text-center md:mt-20 md:text-left">
+                <div
+                    class="inline-block text-6xl font-black text-yellow-500 md:text-7xl"
+                >
+                    HAI SBAGLIATO SITO
+                </div>
+            </div>
+
+            <p class="mt-8 max-w-xl text-xl text-gray-700">
+                Qui mangiamo <span class="font-bold">vero</span>. Piatti pieni,
+                sapori autentici, e senza doversi ipotecare la casa.
+            </p>
+
+            <picture
+                class="absolute right-[1%] -bottom-8 z-10 w-[40%] md:w-[30%] md:opacity-100 lg:w-[30%]"
+            >
+                <Image
+                    alt="Bel signore con il pollice in alto"
+                    src={belSignore}
+                />
+            </picture>
+        </div>
+    </section>
+
+    <section class="bg-white px-6 py-16 md:px-12 md:py-24 lg:px-24">
+        <div class="mx-auto max-w-6xl">
+            <h2 class="mb-16 text-center text-4xl font-bold md:text-5xl">
+                Perché Sbaffando?
+            </h2>
+
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
+                <div class="text-center">
+                    <div
+                        class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100"
+                    >
+                        <svg
+                            class="h-8 w-8 text-yellow-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                d="M10.5 1.5H5.75A2.25 2.25 0 003.5 3.75v12.5A2.25 2.25 0 005.75 18.5h8.5a2.25 2.25 0 002.25-2.25V6.5m-10-5v5h5m-5-5L15 10"
+                            ></path>
+                        </svg>
+                    </div>
+                    <h3 class="mb-3 text-xl font-bold">SAGRE BUONE MERZ</h3>
+                    <p class="text-gray-600">
+                        Trova sagre nascoste e tradizioni locali che mantengono
+                        viva la cultura italiana.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100"
+                    >
+                        <svg
+                            class="h-8 w-8 text-yellow-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                clip-rule="evenodd"
+                                d="M5.5 13a3.5 3.5 0 01-.369-6.98 4 4 0 107.753-1.3A4.5 4.5 0 1113.5 13H11V9.413l1.293 1.293a1 1 0 001.414-1.414l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13H5.5z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="mb-3 text-xl font-bold">
+                        SEMPRE AGGIORNATISSIMO
+                    </h3>
+                    <p class="text-gray-600">
+                        I migliori eventi sono sempre a portata di mano,
+                        filtrati e organizzati per te.
+                    </p>
+                </div>
+
+                <div class="text-center">
+                    <div
+                        class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-yellow-100"
+                    >
+                        <svg
+                            class="h-8 w-8 text-yellow-600"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
+                            <path
+                                clip-rule="evenodd"
+                                d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h3 class="mb-3 text-xl font-bold">
+                        COSE LOCALI E NON ROBACCE
+                    </h3>
+                    <p class="text-gray-600">
+                        Connettiti con le passioni delle persone che mantengono
+                        vive queste tradizioni.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section
+        class="relative overflow-hidden bg-yellow-100 px-6 py-16 md:px-12 md:py-24 lg:px-24"
+    >
+        <div class="mx-auto max-w-4xl">
+            <h2 class="mb-6 text-4xl font-bold md:text-5xl">
+                ALLORA, COSA STAI ASPETTANDO?
+            </h2>
+
+            <a
+                class="inline-block w-full rounded-lg bg-yellow-600 px-10 py-4 text-center text-lg font-bold text-white uppercase transition-colors duration-200 hover:bg-yellow-700"
+                data-umami-event="Final CTA click"
+                href="/trippas"
+            >
+                Vai alla Ricerca Adesso
+            </a>
         </div>
     </section>
 </Layout>
