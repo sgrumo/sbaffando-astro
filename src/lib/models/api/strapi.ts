@@ -88,7 +88,6 @@ export interface ImageData {
     provider_metadata?: unknown | null
 }
 
-// Generic block node that can be any content type
 export interface BlockNode {
     type: string
     level?: number

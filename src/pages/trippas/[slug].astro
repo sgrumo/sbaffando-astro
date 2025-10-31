@@ -23,10 +23,21 @@ const { festival } = Astro.props
     <section class="flex flex-col gap-y-4">
         <h1 class="text-3xl font-bold">{festival.title}</h1>
         <h2 class="text-2xl font-bold">QUANDO?</h2>
-        <section>
-            Dal <FormattedDate date={festival.startDate} />
-            al <FormattedDate date={festival.endDate} />
-        </section>
+        {
+            festival.startDate !== festival.endDate && (
+                <section>
+                    Dal <FormattedDate date={festival.startDate} />
+                    al <FormattedDate date={festival.endDate} />
+                </section>
+            )
+        }
+        {
+            festival.startDate === festival.endDate && (
+                <section>
+                    <FormattedDate date={festival.startDate} />
+                </section>
+            )
+        }
         <h2 class="text-2xl font-bold">DOVE?</h2>
         {
             festival.address && (

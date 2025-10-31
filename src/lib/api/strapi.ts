@@ -10,6 +10,47 @@ import { reverseGeocode } from './geoapify'
 
 const PAGE_SIZE = 25
 
+export const fetchLatestFestivals = async (): Promise<EnrichedFestival[]> => {
+    const festivals: EnrichedFestival[] = []
+
+    const pagination = stringify({
+        pagination: { page: 1, pageSize: 4 },
+    })
+
+    const response = await fetch(
+        `${BASE_URL}/api/festivals?${pagination}&sort=updatedAt:desc`,
+        {
+            headers: {
+                Authorization: `Bearer ${API_TOKEN}`,
+            },
+        },
+    )
+
+    if (!response.ok) throw new Error('Error fetching records')
+    const result: StrapiPaginatedResponse<Festival> = await response.json()
+
+    const enrichedFestivals: EnrichedFestival[] = await Promise.all(
+        result.data.map(async festival => {
+            const addressResult = await reverseGeocode(
+                festival.position.lat,
+                festival.position.lng,
+            )
+            const address = match(addressResult)
+                .with({ resultType: ResultType.Ok }, res => {
+                    return res.result[0]
+                })
+                .with({ resultType: ResultType.Error }, err => {
+                    console.log(err.error)
+                    return undefined
+                })
+                .exhaustive()
+            return { ...festival, address }
+        }),
+    )
+
+    festivals.push(...enrichedFestivals)
+    return festivals
+}
 export const fetchAllFestivals = async (
     params: PaginationParams,
 ): Promise<EnrichedFestival[]> => {
@@ -43,7 +84,6 @@ export const fetchAllFestivals = async (
                     return undefined
                 })
                 .exhaustive()
-            console.log(address)
             return { ...festival, address }
         }),
     )

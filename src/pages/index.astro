@@ -4,8 +4,13 @@ import altraBellaSignora from '../assets/homepage/altrabellasignora.webp'
 import bellaSignora from '../assets/homepage/bellasignora.webp'
 import belSignore from '../assets/homepage/belsignore.webp'
 import logo from '../assets/logo.svg'
+import { SearchResult } from '../components/search/search-result.tsx'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import Layout from '../layouts/BaseLayout.astro'
+import { fetchLatestFestivals } from '../lib/api/strapi'
+import '../styles/global.css'
+
+const festivals = await fetchLatestFestivals()
 ---
 
 <Layout description={SITE_DESCRIPTION} title={SITE_TITLE}>
@@ -26,6 +31,19 @@ import Layout from '../layouts/BaseLayout.astro'
         >
             <Image alt="Bella signora che cucina" src={altraBellaSignora} />
         </picture>
+    </section>
+    <section class="my-8 px-8" id="latest-festivals">
+        <h2 class="text-center text-6xl font-bold uppercase">
+            LE ULTIME MIGLIORI SAGRE
+        </h2>
+        <div
+            class="grid auto-rows-fr grid-cols-1 gap-x-2 gap-y-2 p-2 md:grid-cols-2 xl:grid-cols-4"
+        >
+            {festivals.map(festival => <SearchResult festival={festival} />)}
+        </div>
+        <a class="anchor-button" href="/trippas">
+            GUARDATI LE ALTRE SAGRE SUBITO
+        </a>
     </section>
     <section
         class="relative px-4 py-16 md:px-10 md:pt-24 lg:mt-32 lg:px-24 xl:px-48"

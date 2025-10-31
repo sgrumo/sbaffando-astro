@@ -38,9 +38,13 @@ html {
 }
 
 label {
-    @apply flex flex-col gap-y-[2px];
+    @apply flex flex-col gap-y-1;
 }
 
 label input {
-    @apply rounded-2xl border-[1px] border-solid border-black py-2 pl-4;
+    @apply rounded-2xl border border-solid border-black py-2 pl-4;
+}
+
+.anchor-button {
+    @apply rounded-2xl bg-yellow-400 px-10 py-2 text-center text-white uppercase;
 }
