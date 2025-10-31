@@ -1,6 +1,6 @@
 // @ts-check
 import sitemap from '@astrojs/sitemap';
-import { defineConfig, envField } from 'astro/config';
+import { defineConfig, envField, passthroughImageService } from 'astro/config';
 import { visualizer } from "rollup-plugin-visualizer";
 
 
@@ -11,7 +11,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 
 export default defineConfig({
-    site: 'https://example.com',
+    site: 'https://sbaffando-astro.pages.dev/',
     integrations: [sitemap(), preact({ compat: true })],
     env: {
         schema: {
@@ -20,6 +20,9 @@ export default defineConfig({
             BASE_GEOAPIFY_URL: envField.string({ context: "client", access: "public" }),
             GEOAPIFY_TOKEN: envField.string({ context: "client", access: "public" }),
         }
+    },
+    image: {
+        service: passthroughImageService(),
     },
     vite: {
         ssr: {
