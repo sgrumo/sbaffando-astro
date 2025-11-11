@@ -11,7 +11,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 
 export default defineConfig({
-    site: 'https://sbaffando-astro.pages.dev/',
+    site: 'https://sbaffando.it',
     integrations: [sitemap(), preact({ compat: true })],
     env: {
         schema: {
