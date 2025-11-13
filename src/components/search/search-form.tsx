@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'preact/hooks'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { match } from 'ts-pattern'
 import type { Festival } from '../../lib/models/api/festival'
@@ -25,6 +26,7 @@ type SearchFormProps = {
 }
 
 export const SearchForm = (props: SearchFormProps) => {
+    const [isLoadingLocation, setIsLoadingLocation] = useState(false)
     const {
         handleSubmit,
         register,
@@ -60,6 +62,54 @@ export const SearchForm = (props: SearchFormProps) => {
     const handleLocationResult = ({ lat, lon }: Address) => {
         setValue('position.lat', lat, { shouldValidate: true })
         setValue('position.lng', lon, { shouldValidate: true })
+    }
+
+    const handleGeolocation = () => {
+        if (!navigator.geolocation) {
+            setError('position', {
+                type: 'custom',
+                message: 'Geolocalizzazione non supportata dal browser',
+            })
+            return
+        }
+
+        setIsLoadingLocation(true)
+        navigator.geolocation.getCurrentPosition(
+            position => {
+                const { latitude, longitude } = position.coords
+                setValue('position.lat', latitude, { shouldValidate: true })
+                setValue('position.lng', longitude, { shouldValidate: true })
+                clearErrors('position')
+                setIsLoadingLocation(false)
+            },
+            error => {
+                console.error('Geolocation error:', error)
+                let errorMessage =
+                    'Impossibile accedere alla posizione. Controlla i permessi.'
+
+                if (error.code === error.PERMISSION_DENIED) {
+                    errorMessage =
+                        'Permesso negato. Abilita la geolocalizzazione nelle impostazioni del browser.'
+                } else if (error.code === error.POSITION_UNAVAILABLE) {
+                    errorMessage =
+                        'Posizione non disponibile. Prova più tardi.'
+                } else if (error.code === error.TIMEOUT) {
+                    errorMessage =
+                        'Richiesta di posizione scaduta. Prova di nuovo.'
+                }
+
+                setError('position', {
+                    type: 'custom',
+                    message: errorMessage,
+                })
+                setIsLoadingLocation(false)
+            },
+            {
+                enableHighAccuracy: false,
+                timeout: 10000,
+                maximumAge: 0,
+            },
+        )
     }
 
     // const hasErrors = Object.keys(errors).length > 0
@@ -135,6 +185,22 @@ export const SearchForm = (props: SearchFormProps) => {
                     )}
                 </div>
             </div>
+
+            <button
+                type="button"
+                onClick={handleGeolocation}
+                disabled={isLoadingLocation || isSubmitting}
+                className="flex items-center justify-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 transition-all duration-200 hover:bg-blue-100 active:bg-blue-200 disabled:cursor-not-allowed disabled:opacity-50 md:py-3 md:text-base"
+            >
+                {isLoadingLocation ? (
+                    <>
+                        <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></span>
+                        Localizzazione...
+                    </>
+                ) : (
+                    'ORA E VICINO'
+                )}
+            </button>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
                 <div className="flex flex-col">

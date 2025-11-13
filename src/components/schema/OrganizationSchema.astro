@@ -1,0 +1,25 @@
+---
+interface Props {
+    baseUrl?: string
+}
+
+const { baseUrl = 'https://sbaffando.it' } = Astro.props
+
+const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: 'Sbaffando',
+    description: 'Il portale definitivo per le sagre e i festival in Italia',
+    url: baseUrl,
+    logo: `${baseUrl}/android-chrome-192x192.png`,
+    image: `${baseUrl}/android-chrome-512x512.png`,
+    sameAs: [],
+    areaServed: {
+        '@type': 'Country',
+        name: 'IT',
+    },
+    serviceType: 'Event Discovery',
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />

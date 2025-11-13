@@ -4,6 +4,7 @@ import altraBellaSignora from '../assets/homepage/altrabellasignora.webp'
 import bellaSignora from '../assets/homepage/bellasignora.webp'
 import belSignore from '../assets/homepage/belsignore.webp'
 import { SearchResult } from '../components/search/search-result.tsx'
+import OrganizationSchema from '../components/schema/OrganizationSchema.astro'
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts'
 import Layout from '../layouts/BaseLayout.astro'
 import { fetchLatestFestivals } from '../lib/api/strapi'
@@ -13,6 +14,7 @@ const festivals = await fetchLatestFestivals()
 ---
 
 <Layout description={SITE_DESCRIPTION} title={SITE_TITLE}>
+    <OrganizationSchema />
     <!-- HERO SECTION -->
     <section
         class="relative flex h-screen flex-col items-center justify-center gap-y-0.5 overflow-hidden bg-gradient-to-b from-yellow-500 to-yellow-400"

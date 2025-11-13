@@ -3,7 +3,6 @@ import { match } from 'ts-pattern'
 import { fetchPlaces } from '../../lib/api/geoapify'
 import type { Address } from '../../lib/models/api/geoapify'
 import { ResultType } from '../../lib/utils/algebraic'
-import { Loader } from '../common/loader'
 
 const DEBOUNCE_TIME = 500
 
@@ -68,7 +67,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
                 type="text"
                 id="location"
                 placeholder="Es. Roma, Milano..."
-                className="w-full rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
+                className="w-full rounded-lg border-2 border-gray-300 px-3 py-2.5 pr-10 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:pr-12 md:text-base"
                 value={
                     selectedResult
                         ? `${selectedResult.address_line1}, ${selectedResult.address_line2}`
@@ -85,22 +84,21 @@ export const Autocomplete = (props: AutocompleteProps) => {
 
             {/* Loading Indicator */}
             {isLoading && (
-                <div className="absolute top-1/2 right-3 -translate-y-1/2 md:right-4">
-                    <Loader className="h-4 w-4 md:h-5 md:w-5" />
+                <div className="pointer-events-none absolute inset-y-0 right-3 flex items-center md:right-4">
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-gray-600 md:h-5 md:w-5"></span>
                 </div>
             )}
 
-            {/* Results Dropdown */}
             {isOpen &&
                 !isLoading &&
                 addressResults !== undefined &&
                 addressResults.length > 0 && (
-                    <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-lg border-2 border-gray-300 bg-white shadow-lg md:max-h-64">
+                    <div className="absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-y-auto rounded-lg border-2 border-gray-300 bg-white shadow-lg md:max-h-72">
                         {addressResults.map(address => (
                             <button
                                 type="button"
                                 key={address.place_id}
-                                className="w-full border-b border-gray-200 px-3 py-2.5 text-left text-sm text-gray-900 transition-colors last:border-b-0 hover:bg-yellow-100 focus:bg-yellow-100 focus:outline-none active:bg-yellow-200 md:px-4 md:py-3 md:text-base"
+                                className="flex w-full flex-col border-b border-gray-200 px-3 py-2.5 text-left text-sm text-gray-900 transition-colors last:border-b-0 hover:bg-yellow-100 focus:bg-yellow-100 focus:outline-none active:bg-yellow-200 md:px-4 md:py-3 md:text-base"
                                 onClick={() => handleResultClick(address)}
                                 onKeyDown={e => {
                                     if (e.key === 'Enter' || e.key === ' ') {
@@ -113,7 +111,7 @@ export const Autocomplete = (props: AutocompleteProps) => {
                                 </span>
                                 {address.address_line2 && (
                                     <span className="text-xs text-gray-600 md:text-sm">
-                                        {', ' + address.address_line2}
+                                        {address.address_line2}
                                     </span>
                                 )}
                             </button>
@@ -121,7 +119,6 @@ export const Autocomplete = (props: AutocompleteProps) => {
                     </div>
                 )}
 
-            {/* No Results */}
             {isOpen &&
                 !isLoading &&
                 addressResults !== undefined &&

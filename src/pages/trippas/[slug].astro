@@ -1,8 +1,11 @@
 ---
 import FormattedDate from '../../components/FormattedDate.astro'
 import BlockRenderContent from '../../components/trippas/BlockRenderContent.astro'
+import EventSchema from '../../components/schema/EventSchema.astro'
+import BreadcrumbSchema from '../../components/schema/BreadcrumbSchema.astro'
 import HeaderLayout from '../../layouts/HeaderLayout.astro'
 import { fetchAllFestivals } from '../../lib/api/strapi'
+import { generateFestivalDescription } from '../../lib/utils/description'
 
 export async function getStaticPaths() {
     const festivals = await fetchAllFestivals({ page: 1, pageSize: 25 })
@@ -14,12 +17,21 @@ export async function getStaticPaths() {
 }
 
 const { festival } = Astro.props
+const description = generateFestivalDescription(festival)
 ---
 
 <HeaderLayout
-    description={`Sbaffando - ${festival.title}`}
+    description={description}
     title={festival.title}
 >
+    <EventSchema festival={festival} />
+    <BreadcrumbSchema
+        items={[
+            { name: 'Home', url: 'https://sbaffando.it' },
+            { name: 'Sagre', url: 'https://sbaffando.it/trippas' },
+            { name: festival.title, url: `https://sbaffando.it/trippas/${festival.slug}` },
+        ]}
+    />
     <article class="mx-auto max-w-4xl px-4 py-6 md:px-6 md:py-10 lg:px-8">
         <div class="mb-8 md:mb-12">
             <h1

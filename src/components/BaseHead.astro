@@ -16,7 +16,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site),
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta content="width=device-width,initial-scale=1" name="viewport" />
-<link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+<link href="/favicon.ico" rel="icon" type="image/x-icon" />
 <link href="/sitemap-index.xml" rel="sitemap" />
 <link
     href={new URL('rss.xml', Astro.site)}
@@ -58,10 +58,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site),
 <!-- Canonical URL -->
 <link href={canonicalURL} rel="canonical" />
 
+<!-- PWA Manifest -->
+<link href="/manifest.json" rel="manifest" />
+<meta content="#eab308" name="theme-color" />
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="Sbaffando" name="apple-mobile-web-app-title" />
+<meta content="#ffffff" name="apple-mobile-web-app-status-bar-style" />
+
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta content={title} name="title" />
 <meta content={description} name="description" />
+<meta content="index, follow" name="robots" />
+<meta content="it_IT" name="language" />
+<meta content="7 days" name="revisit-after" />
 
 <!-- Open Graph / Facebook -->
 <meta content="website" property="og:type" />

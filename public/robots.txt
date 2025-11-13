@@ -1,0 +1,26 @@
+# Allow search engines to crawl the entire site
+User-agent: *
+Allow: /
+
+# Disallow crawling of API routes and internal pages
+Disallow: *.json
+Disallow: /admin
+
+# Crawl delay - be respectful to server
+Crawl-delay: 1
+
+# Sitemaps
+Sitemap: https://sbaffando.it/sitemap-index.xml
+
+# Specific rules for popular search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 1

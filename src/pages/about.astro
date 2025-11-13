@@ -1,70 +1,87 @@
 ---
 import HeaderLayout from '../layouts/HeaderLayout.astro'
+import BreadcrumbSchema from '../components/schema/BreadcrumbSchema.astro'
 ---
 
-<HeaderLayout description="About" title="About Trippavisor">
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Vitae ultricies leo
-        integer malesuada nunc vel risus commodo viverra. Adipiscing enim eu
-        turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-        adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus
-        sit amet volutpat. Netus et malesuada fames ac turpis egestas. Eget
-        magna fermentum iaculis eu non diam phasellus vestibulum lorem. Varius
-        sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-        sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque
-        sagittis purus sit amet.
-    </p>
+<HeaderLayout
+    description="Scopri chi siamo e la missione di Sbaffando - Il portale definitivo per scoprire i migliori festival e sagre in Italia"
+    title="Chi Siamo - Sbaffando"
+>
+    <BreadcrumbSchema
+        items={[
+            { name: 'Home', url: 'https://sbaffando.it' },
+            { name: 'Chi Siamo', url: 'https://sbaffando.it/about' },
+        ]}
+    />
+    <article class="mx-auto max-w-4xl px-4 py-6 md:px-6 md:py-10 lg:px-8">
+        <div class="mb-8 md:mb-12">
+            <h1 class="mb-2 text-4xl font-bold text-gray-900 md:text-5xl">
+                Chi Siamo
+            </h1>
+            <div class="h-1 w-16 rounded-full bg-yellow-500"></div>
+        </div>
 
-    <p>
-        Morbi tristique senectus et netus. Id semper risus in hendrerit gravida
-        rutrum quisque non tellus. Habitasse platea dictumst quisque sagittis
-        purus sit amet. Tellus molestie nunc non blandit massa. Cursus vitae
-        congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-        porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt
-        lobortis. In cursus turpis massa tincidunt dui ut ornare lectus. Integer
-        feugiat scelerisque varius morbi enim nunc. Bibendum neque egestas
-        congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-        bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus
-        urna et pharetra pharetra massa massa ultricies mi.
-    </p>
+        <section class="prose prose-sm md:prose-base max-w-none text-gray-700 leading-relaxed">
+            <h2>La Nostra Missione</h2>
+            <p>
+                Sbaffando è il portale definitivo per scoprire i migliori festival, sagre e eventi gastronomici in Italia. La nostra missione è aiutare gli amanti del cibo, della cultura e delle tradizioni locali a trovare facilmente gli eventi più interessanti nel loro territorio.
+            </p>
 
-    <p>
-        Mollis nunc sed id semper risus in. Convallis a cras semper auctor
-        neque. Diam sit amet nisl suscipit. Lacus viverra vitae congue eu
-        consequat ac felis donec. Egestas integer eget aliquet nibh praesent
-        tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In
-        vitae turpis massa sed elementum. Tristique et egestas quis ipsum
-        suspendisse ultrices. Eget lorem dolor sed viverra ipsum. Vel turpis
-        nunc eget lorem dolor sed viverra. Posuere ac ut consequat semper
-        viverra nam. Laoreet suspendisse interdum consectetur libero id
-        faucibus. Diam phasellus vestibulum lorem sed risus ultricies tristique.
-        Rhoncus dolor purus non enim praesent elementum facilisis. Ultrices
-        tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium
-        quam vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus
-        faucibus ornare. Fringilla urna porttitor rhoncus dolor purus non. Amet
-        dictum sit amet justo donec enim.
-    </p>
+            <h2>Perché Sbaffando?</h2>
+            <p>
+                In Italia abbiamo migliaia di sagre e festival dedicati alle specialità locali, dalle arrosticini abruzzesi alle feste del vino, dalle sagre della pasta e fagioli alle esposizioni di prodotti tipici. Purtroppo, trovare questi eventi può essere complicato perché spesso non hanno una grande visibilità online.
+            </p>
+            <p>
+                Sbaffando nasce per risolvere questo problema. Il nostro database aggregato ti permette di scoprire facilmente gli eventi gastronomici e culturali in base a:
+            </p>
+            <ul>
+                <li>Localizzazione geografica (con ricerca per raggio)</li>
+                <li>Data e periodo dell'anno</li>
+                <li>Tipo di evento o specialità culinaria</li>
+            </ul>
 
-    <p>
-        Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere
-        ac ut consequat semper viverra. Tellus mauris a diam maecenas sed enim
-        ut sem viverra. Venenatis urna cursus eget nunc scelerisque viverra
-        mauris in. Arcu ac tortor dignissim convallis aenean et tortor at.
-        Curabitur gravida arcu ac tortor dignissim convallis aenean et tortor.
-        Egestas tellus rutrum tellus pellentesque eu. Fusce ut placerat orci
-        nulla pellentesque dignissim enim sit amet. Ut enim blandit volutpat
-        maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt
-        arcu. Id cursus metus aliquam eleifend mi.
-    </p>
+            <h2>Come Funziona</h2>
+            <p>
+                Il nostro sito ti permette di:
+            </p>
+            <ul>
+                <li>Cercare sagre e festival per nome, città o specialità</li>
+                <li>Filtrare gli eventi per data e periodo</li>
+                <li>Trovare eventi vicino a te usando la geolocalizzazione</li>
+                <li>Accedere a informazioni complete su ogni evento: date, luogo, descrizione</li>
+                <li>Navigare direttamente su Google Maps per le indicazioni stradali</li>
+            </ul>
 
-    <p>
-        Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi
-        tempus imperdiet. Id porta nibh venenatis cras sed felis eget velit.
-        Ipsum a arcu cursus vitae. Facilisis magna etiam tempor orci eu lobortis
-        elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-        ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper
-        feugiat nibh sed pulvinar proin gravida. Egestas integer eget aliquet
-        nibh praesent tristique magna.
-    </p>
+            <h2>Il Nostro Team</h2>
+            <p>
+                Sbaffando è sviluppato da appassionati di cibo, tecnologia e culture locali. Crediamo che la tecnologia possa aiutare a valorizzare le tradizioni gastronomiche italiane e permettere a sempre più persone di scoprire le bellezze culinarie del nostro paese.
+            </p>
+
+            <h2>Contattaci</h2>
+            <p>
+                Hai suggerimenti per migliorare Sbaffando? Hai scoperto una sagra che non è nel nostro database? <a href="/contact" class="text-yellow-600 hover:text-yellow-700 font-semibold">Contattaci</a> per aiutarci a fare crescere la comunità!
+            </p>
+        </section>
+
+        <div class="mt-12 border-t-2 border-gray-200 pt-8">
+            <a
+                class="inline-flex items-center gap-2 rounded-lg bg-yellow-500 px-4 py-2.5 font-semibold text-gray-900 transition-colors hover:bg-yellow-600"
+                href="/"
+            >
+                <svg
+                    class="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M15 19l-7-7 7-7"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"></path>
+                </svg>
+                Torna alla Home
+            </a>
+        </div>
+    </article>
 </HeaderLayout>

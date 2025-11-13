@@ -1,0 +1,48 @@
+---
+import type { Festival } from '../../lib/models/api/festival'
+
+interface Props {
+    festival: Festival
+    baseUrl?: string
+}
+
+const { festival, baseUrl = 'https://sbaffando.it' } = Astro.props
+
+const eventSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: festival.title,
+    description: festival.description
+        ? 'Festival in Italia'
+        : `${festival.title} - Sagra in Italia`,
+    startDate: festival.startDate,
+    endDate: festival.endDate,
+    url: `${baseUrl}/trippas/${festival.slug}`,
+    image: festival.image || `${baseUrl}/favicon-32x32.png`,
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+        '@type': 'Place',
+        name: festival.address?.address_line1 || 'Italia',
+        address: {
+            '@type': 'PostalAddress',
+            addressCountry: 'IT',
+            addressLocality:
+                festival.address?.address_line2 ||
+                festival.address?.address_line1,
+        },
+        geo: {
+            '@type': 'GeoCoordinates',
+            latitude: festival.position.lat,
+            longitude: festival.position.lng,
+        },
+    },
+    organizer: {
+        '@type': 'LocalBusiness',
+        name: 'Sbaffando',
+        url: baseUrl,
+    },
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(eventSchema)} />
