@@ -10,11 +10,11 @@
         "knip": "knip"
     },
     "dependencies": {
-        "@astrojs/preact": "^4.1.1",
-        "@astrojs/sitemap": "^3.6.0",
+        "@astrojs/preact": "^5.1.3",
+        "@astrojs/sitemap": "^3.7.2",
         "@hookform/resolvers": "^4.1.3",
         "@tailwindcss/vite": "^4.0.15",
-        "astro": "^5.14.8",
+        "astro": "^6.3.7",
         "dayjs": "^1.11.18",
         "preact": "^10.26.4",
         "qs-stringify": "^1.2.1",

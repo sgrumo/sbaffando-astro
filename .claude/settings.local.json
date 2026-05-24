@@ -3,7 +3,24 @@
     "allow": [
       "Bash(tree:*)",
       "Bash(npm run build:*)",
-      "Bash(xargs cat:*)"
+      "Bash(xargs cat:*)",
+      "Bash(timeout 25 npm run dev)",
+      "Bash(npm run *)",
+      "Bash(curl -sS -o /tmp/page.html -w \"%{http_code}\\\\n\" http://localhost:4322/)",
+      "Bash(curl -sS -o /tmp/page2.html -w \"%{http_code}\\\\n\" http://localhost:4322/trippas)",
+      "Bash(npx astro *)",
+      "Bash(curl -sS -o /tmp/p.html -w \"HTTP %{http_code}\\\\n\" http://localhost:4322/trippas)",
+      "Bash(DEBUG=\"\" npm run dev)",
+      "Bash(curl -sS -o /tmp/p1.html -w \"/ → HTTP %{http_code}\\\\n\" http://localhost:4322/)",
+      "Bash(curl -sS -o /tmp/p2.html -w \"/about → HTTP %{http_code}\\\\n\" http://localhost:4322/about)",
+      "Bash(curl -sS -o /tmp/p3.html -w \"/trippas → HTTP %{http_code}\\\\n\" http://localhost:4322/trippas)",
+      "Bash(curl -sS http://localhost:4322/src/components/search/search-container.tsx -o /tmp/sc.js -w \"container: HTTP %{http_code} size=%{size_download}\\\\n\")",
+      "Bash(curl -sS http://localhost:4322/src/components/search/search-form.tsx -o /tmp/sf.js -w \"form: HTTP %{http_code} size=%{size_download}\\\\n\")",
+      "Read(//tmp/**)",
+      "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/react-hook-form.js?v=677d160b\" -o /tmp/rhf.js -w \"HTTP %{http_code} size=%{size_download}\\\\n\")",
+      "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/chunk-OIZDLM2T.js?v=677d160b\" -o /tmp/chunk.js -w \"HTTP %{http_code} size=%{size_download}\\\\n\")",
+      "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/react-hook-form.js\" -o /tmp/rhf2.js -w \"HTTP %{http_code}\\\\n\")",
+      "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/chunk-SOAL6IA6.js\" -o /tmp/chunk3.js)"
     ],
     "deny": [],
     "ask": []
