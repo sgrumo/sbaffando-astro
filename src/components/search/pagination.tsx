@@ -51,21 +51,18 @@ const SearchPagination = ({
         }
     }
 
-    const baseButtonClass =
-        'px-2.5 py-2 md:px-3 md:py-2 text-sm md:text-base font-medium transition-all duration-200 rounded-md'
+    const regularButtonClass = 'sb-page'
 
-    const regularButtonClass = `${baseButtonClass} text-gray-700 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed`
+    const activeButtonClass = 'sb-page active'
 
-    const activeButtonClass = `${baseButtonClass} bg-yellow-500 text-white font-bold hover:bg-yellow-600 active:bg-yellow-700`
-
-    const navigationButtonClass = `${baseButtonClass} text-gray-700 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold`
+    const navigationButtonClass = 'sb-page'
 
     return (
         <nav
             aria-label={labels.navigationLabel || 'Pagination'}
-            className="mt-6 flex justify-center py-4 md:mt-8"
+            className="sb-pagination"
         >
-            <ul className="flex flex-wrap items-center justify-center gap-1 md:gap-2">
+            <ul>
                 <li>
                     <button
                         onClick={() => handlePageClick(safePage - 1)}
@@ -92,7 +89,7 @@ const SearchPagination = ({
                             </button>
                         </li>
                         {visiblePages[0] > 2 && (
-                            <li className="px-1 text-gray-400">
+                            <li className="sb-ellipsis">
                                 <span aria-hidden="true">…</span>
                             </li>
                         )}
@@ -124,7 +121,7 @@ const SearchPagination = ({
                     <>
                         {visiblePages[visiblePages.length - 1] <
                             totalPages - 1 && (
-                            <li className="px-1 text-gray-400">
+                            <li className="sb-ellipsis">
                                 <span aria-hidden="true">…</span>
                             </li>
                         )}

@@ -6,17 +6,38 @@ type SearchResultsProps = {
 }
 
 export const SearchResults = (props: SearchResultsProps) => {
+    const count = props.festivals.length
     return (
-        <div className="mt-4 grid grid-cols-1 gap-x-2 gap-y-4 md:grid-cols-3 md:gap-x-4 md:gap-y-8 lg:grid-cols-4">
-            {props.festivals.length > 0 &&
-                props.festivals.map(festival =>
-                    <SearchResult festival={festival} />
+        <section className="rs-section">
+            <div className="container">
+                <div className="rs-head">
+                    <span className="eyebrow">Risultati</span>
+                    {count > 0 && (
+                        <div className="rs-count">
+                            <strong>{count}</strong>
+                            <span>
+                                {count === 1 ? 'sagra trovata' : 'sagre trovate'}
+                            </span>
+                        </div>
+                    )}
+                </div>
+
+                {count > 0 ? (
+                    <div className="rs-grid">
+                        {props.festivals.map(festival => (
+                            <SearchResult
+                                key={festival.slug}
+                                festival={festival}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    <span className="rs-empty">
+                        Non sono state trovate sagre con questi criteri di
+                        ricerca!
+                    </span>
                 )}
-            {props.festivals.length === 0 && (
-                <span className="mt-4 font-bold">
-                    Non sono state trovate sagre con questi criteri di ricerca!
-                </span>
-            )}
-        </div>
+            </div>
+        </section>
     )
 }

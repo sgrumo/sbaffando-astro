@@ -91,8 +91,7 @@ export const SearchForm = (props: SearchFormProps) => {
                     errorMessage =
                         'Permesso negato. Abilita la geolocalizzazione nelle impostazioni del browser.'
                 } else if (error.code === error.POSITION_UNAVAILABLE) {
-                    errorMessage =
-                        'Posizione non disponibile. Prova più tardi.'
+                    errorMessage = 'Posizione non disponibile. Prova più tardi.'
                 } else if (error.code === error.TIMEOUT) {
                     errorMessage =
                         'Richiesta di posizione scaduta. Prova di nuovo.'
@@ -115,165 +114,179 @@ export const SearchForm = (props: SearchFormProps) => {
     // const hasErrors = Object.keys(errors).length > 0
 
     return (
-        <form
-            onSubmit={handleSubmit(onSubmit)}
-            onResetCapture={handleReset}
-            onReset={() => clearErrors()}
-            className="flex flex-col gap-y-3 p-4 md:gap-y-4 md:p-6"
-        >
-            <div className="flex flex-col">
-                <label
-                    htmlFor="query"
-                    className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
-                >
-                    Parola chiave
-                </label>
-                <input
-                    className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
-                    type="text"
-                    id="query"
-                    placeholder="Es. pizza, arrosticini..."
-                    {...register('query')}
-                />
-                {errors.query && (
-                    <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
-                        {errors.query.message}
+        <section className="sf-section">
+            <div className="container">
+                <span className="eyebrow">Cerca</span>
+                <h2 className="sf-title">
+                    <span className="a">Cosa ti</span>
+                    <span className="b">
+                        va di <span className="scribble">mangiare?</span>
                     </span>
-                )}
-            </div>
+                </h2>
+                <p className="sf-sub">
+                    Dimmi tre cose. Ti mando al padellone più vicino.
+                </p>
 
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-[1fr_120px] md:gap-4">
-                <div className="flex flex-col">
-                    <label
-                        htmlFor="location"
-                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
-                    >
-                        Posizione
-                    </label>
-                    <Autocomplete onResultClick={handleLocationResult} />
-                    {errors.position && (
-                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
-                            {errors.position.message ||
-                                errors.position.lat?.message ||
-                                errors.position.lng?.message}
-                        </span>
-                    )}
-                </div>
-
-                <div className="flex flex-col">
-                    <label
-                        htmlFor="radius"
-                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
-                    >
-                        Raggio (km)
-                    </label>
-                    <input
-                        className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
-                        type="number"
-                        id="radius"
-                        placeholder="5"
-                        defaultValue={5}
-                        min={5}
-                        max={100}
-                        step={1}
-                        {...register('radius')}
-                    />
-                    {errors.radius && (
-                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
-                            {errors.radius.message}
-                        </span>
-                    )}
-                </div>
-            </div>
-
-            <button
-                type="button"
-                onClick={handleGeolocation}
-                disabled={isLoadingLocation || isSubmitting}
-                className="flex items-center justify-center gap-2 rounded-lg border-2 border-blue-500 bg-blue-50 px-4 py-2.5 text-sm font-semibold text-blue-700 transition-all duration-200 hover:bg-blue-100 active:bg-blue-200 disabled:cursor-not-allowed disabled:opacity-50 md:py-3 md:text-base"
-            >
-                {isLoadingLocation ? (
-                    <>
-                        <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></span>
-                        Localizzazione...
-                    </>
-                ) : (
-                    'ORA E VICINO'
-                )}
-            </button>
-
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-4">
-                <div className="flex flex-col">
-                    <label
-                        htmlFor="startDate"
-                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
-                    >
-                        Data di inizio
-                    </label>
-                    <input
-                        className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
-                        type="date"
-                        id="startDate"
-                        {...register('startDate')}
-                    />
-                    {errors.startDate && (
-                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
-                            {errors.startDate.message}
-                        </span>
-                    )}
-                </div>
-
-                <div className="flex flex-col">
-                    <label
-                        htmlFor="endDate"
-                        className="mb-1.5 text-sm font-semibold text-gray-900 md:text-base"
-                    >
-                        Data di fine
-                    </label>
-                    <input
-                        className="rounded-lg border-2 border-gray-300 px-3 py-2.5 text-sm transition-all focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 focus:outline-none md:px-4 md:py-3 md:text-base"
-                        type="date"
-                        id="endDate"
-                        {...register('endDate')}
-                    />
-                    {errors.endDate && (
-                        <span className="mt-1 text-xs font-medium text-red-600 md:text-sm">
-                            {errors.endDate.message}
-                        </span>
-                    )}
-                </div>
-            </div>
-
-            {errors.root && errors.root.message && (
-                <div className="rounded border-l-4 border-red-500 bg-red-50 p-3 md:p-4">
-                    <span className="text-sm font-medium text-red-700 md:text-base">
-                        {errors.root.message}
-                    </span>
-                </div>
-            )}
-
-            <div className="flex gap-3 pt-2 md:gap-4 md:pt-4">
-                <button
-                    className="flex-1 rounded-lg bg-gray-200 px-4 py-2.5 text-sm font-semibold text-gray-900 transition-all duration-200 hover:bg-gray-300 active:bg-gray-400 disabled:cursor-not-allowed disabled:opacity-50 md:px-6 md:py-3 md:text-base"
-                    type="reset"
-                    disabled={!isDirty || isSubmitting}
+                <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    onResetCapture={handleReset}
+                    onReset={() => clearErrors()}
+                    className="sf-card"
                 >
-                    Reset
-                </button>
-                <button
-                    className="flex-1 rounded-lg bg-gray-400 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-gray-500 active:bg-gray-600 enabled:bg-yellow-500 enabled:hover:bg-yellow-600 enabled:active:bg-yellow-700 disabled:cursor-not-allowed disabled:opacity-50 md:px-6 md:py-3 md:text-base"
-                    type="submit"
-                    disabled={!isValid || isSubmitting}
-                >
-                    {isSubmitting ? (
-                        <span className="flex items-center justify-center gap-2">
-                            <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent"></span>
-                        </span>
-                    ) : (
-                        'Cerca'
+                    <div className="sf-row r1">
+                        <div className="sf-field">
+                            <label className="sf-label" htmlFor="query">
+                                Ho voglia di…
+                            </label>
+                            <input
+                                className="sf-input"
+                                type="text"
+                                id="query"
+                                placeholder="tortelloni, porchetta, gnocco fritto…"
+                                {...register('query')}
+                            />
+                            {errors.query && (
+                                <span className="sf-error">
+                                    {errors.query.message}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="sf-row r2">
+                        <div className="sf-field">
+                            <label className="sf-label" htmlFor="location">
+                                Parto da
+                            </label>
+                            <Autocomplete
+                                onResultClick={handleLocationResult}
+                            />
+                            {errors.position && (
+                                <span className="sf-error">
+                                    {errors.position.message ||
+                                        errors.position.lat?.message ||
+                                        errors.position.lng?.message}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="sf-field">
+                            <label className="sf-label" htmlFor="radius">
+                                Mi sposto di (km)
+                            </label>
+                            <input
+                                className="sf-input"
+                                type="number"
+                                id="radius"
+                                placeholder="5"
+                                defaultValue={5}
+                                min={5}
+                                max={100}
+                                step={1}
+                                {...register('radius')}
+                            />
+                            {errors.radius && (
+                                <span className="sf-error">
+                                    {errors.radius.message}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* TODO: "Ora e vicino" geolocation button temporarily
+                        removed until it gives proper user feedback. The
+                        handleGeolocation handler and isLoadingLocation state
+                        are kept in place to restore it later.
+                    <div className="sf-row r1">
+                        <button
+                            type="button"
+                            className="sf-now"
+                            onClick={handleGeolocation}
+                            disabled={isLoadingLocation || isSubmitting}
+                        >
+                            {isLoadingLocation ? (
+                                <>
+                                    <span className="sf-spin"></span>
+                                    Localizzazione...
+                                </>
+                            ) : (
+                                <>
+                                    <span className="ico">⌖</span> Ora e vicino
+                                </>
+                            )}
+                        </button>
+                    </div>
+                    */}
+
+                    <div className="sf-row r3">
+                        <div className="sf-field">
+                            <label className="sf-label" htmlFor="startDate">
+                                Da quando
+                            </label>
+                            <input
+                                className="sf-input"
+                                type="date"
+                                id="startDate"
+                                {...register('startDate')}
+                            />
+                            {errors.startDate && (
+                                <span className="sf-error">
+                                    {errors.startDate.message}
+                                </span>
+                            )}
+                        </div>
+
+                        <div className="sf-field">
+                            <label className="sf-label" htmlFor="endDate">
+                                Fino a
+                            </label>
+                            <input
+                                className="sf-input"
+                                type="date"
+                                id="endDate"
+                                {...register('endDate')}
+                            />
+                            {errors.endDate && (
+                                <span className="sf-error">
+                                    {errors.endDate.message}
+                                </span>
+                            )}
+                        </div>
+                    </div>
+
+                    {errors.root && errors.root.message && (
+                        <div className="sf-row r1">
+                            <div className="sf-error-box">
+                                {errors.root.message}
+                            </div>
+                        </div>
                     )}
-                </button>
+
+                    <div className="sf-actions">
+                        <button
+                            className="sf-reset"
+                            type="reset"
+                            disabled={!isDirty || isSubmitting}
+                        >
+                            Reset
+                        </button>
+                        <button
+                            className="sf-go"
+                            type="submit"
+                            disabled={!isValid || isSubmitting}
+                        >
+                            {isSubmitting ? (
+                                <span className="sf-spin"></span>
+                            ) : (
+                                <>
+                                    Portami al padellone
+                                    <span className="arr">→</span>
+                                </>
+                            )}
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </section>
     )
 }

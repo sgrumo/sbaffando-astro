@@ -26,34 +26,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site),
 />
 <meta content={Astro.generator} name="generator" />
 
-<!-- Font preloads -->
+<!-- Fonts: Public Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin href="https://fonts.gstatic.com" rel="preconnect" />
 <link
-    as="font"
-    crossorigin
-    href="/fonts/BeVietnamPro-Bold.ttf"
-    rel="preload"
-    type="font/ttf"
-/>
-<link
-    as="font"
-    crossorigin
-    href="/fonts/BeVietnamPro-Medium.ttf"
-    rel="preload"
-    type="font/ttf"
-/>
-<link
-    as="font"
-    crossorigin
-    href="/fonts/BeVietnamPro-Regular.ttf"
-    rel="preload"
-    type="font/ttf"
-/>
-<link
-    as="font"
-    crossorigin
-    href="/fonts/BeVietnamPro-SemiBold.ttf"
-    rel="preload"
-    type="font/ttf"
+    href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300..900;1,300..900&display=swap"
+    rel="stylesheet"
 />
 <!-- Canonical URL -->
 <link href={canonicalURL} rel="canonical" />

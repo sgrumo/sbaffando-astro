@@ -20,7 +20,17 @@
       "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/react-hook-form.js?v=677d160b\" -o /tmp/rhf.js -w \"HTTP %{http_code} size=%{size_download}\\\\n\")",
       "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/chunk-OIZDLM2T.js?v=677d160b\" -o /tmp/chunk.js -w \"HTTP %{http_code} size=%{size_download}\\\\n\")",
       "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/react-hook-form.js\" -o /tmp/rhf2.js -w \"HTTP %{http_code}\\\\n\")",
-      "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/chunk-SOAL6IA6.js\" -o /tmp/chunk3.js)"
+      "Bash(curl -sS \"http://localhost:4322/node_modules/.vite/deps/chunk-SOAL6IA6.js\" -o /tmp/chunk3.js)",
+      "Bash(gh release *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(awk '{print $2}')",
+      "Bash(ps -p 83255 -o pid,ppid,command)",
+      "WebFetch(domain:api.anthropic.com)",
+      "Bash(curl -sL -w \"\\\\n[HTTP %{http_code}]\\\\n\" \"https://api.anthropic.com/v1/design/h/U0WiWmDACOuf_yomo5LQ4A?open_file=Sbaffando+ricerca.html\")",
+      "Bash(curl -sL -w \"\\\\n[HTTP %{http_code}]\\\\n\" \"https://api.anthropic.com/v1/design/h/U0WiWmDACOuf_yomo5LQ4A\")",
+      "Bash(curl -sL -w \"\\\\n[HTTP %{http_code}]\\\\n\" \"https://api.anthropic.com/v1/design/h/U0WiWmDACOuf_yomo5LQ4A/files\")",
+      "Bash(pkill -f \"astro dev\")"
     ],
     "deny": [],
     "ask": []
