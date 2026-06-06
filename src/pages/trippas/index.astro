@@ -5,5 +5,5 @@ import HeaderLayout from '../../layouts/HeaderLayout.astro'
 ---
 
 <HeaderLayout description={SITE_DESCRIPTION} title={SITE_TITLE}>
-    <SearchContainer client:load />
+    <SearchContainer client:only="preact" />
 </HeaderLayout>
